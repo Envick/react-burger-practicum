@@ -1,6 +1,5 @@
 .ingredientsBlock{
     width: 600px;
-
 }
 .tabs{
     display: flex;
@@ -21,3 +20,23 @@
 .ingredientItems::-webkit-scrollbar-thumb {
     background: #8585AD;
 }
+.itemsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+.burgerCard{
+    flex: 1;
+    min-width: 45%;
+    max-width: 50%;
+}
+.count{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.titleContainer{
+    min-height: 88px;
+    text-align: center;
+}
+

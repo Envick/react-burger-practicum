@@ -1,40 +1,20 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css'
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 
 
 
 function BurgerIngredients({data}:any) {
     const [current, setCurrent] = useState('bun')
-    const [buns, setBuns] = useState([])
-    const [sauses, setSauses] = useState([])
-    const [mains, setMains] = useState([])
-    data.forEach((item:Object) => {
-        //@ts-ignore
-        switch(item.type){
-            case 'bun':
-                //@ts-ignore
-                setBuns(prev => [...prev, item])
-                break
-            case 'sause':
-                //@ts-ignore
-                setSauses(prev => [...prev, item])
-                break
-            case 'main':
-                //@ts-ignore
-                setMains(prev => [...prev, item])
-                break
-        }
-    })
+
     return (
-        <div className={`${styles.ingredientsBlock} pt-10`}>
-            <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+        <div className={`${styles.ingredientsBlock}`}>
             <div className={`${styles.tabs} pb-10`}>
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
                     Булка
                 </Tab>
-                <Tab value="sause" active={current === 'sause'} onClick={setCurrent}>
+                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
                     Соус
                 </Tab>
                 <Tab value="main" active={current === 'main'} onClick={setCurrent}>
@@ -42,14 +22,69 @@ function BurgerIngredients({data}:any) {
                 </Tab>
             </div>
             <div className={styles.ingredientItems}>
-                <h2 className="text text_type_main-medium">Булки</h2>
-                {buns.length && buns.map(item => (
-                    <div className={styles.burgerCard}>
-
-                    </div>
-                ))}
-                <h2 className="text text_type_main-medium">Соусы</h2>
-                <h2 className="text text_type_main-medium">Начинки</h2>
+                <h2 className="text text_type_main-medium mb-6">Булки</h2>
+                <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
+                    {data.map((item:any, index:number) => {
+                        if(item.type == 'bun'){
+                            return (
+                                <div key={item['_id']} className={styles.burgerCard}>
+                                    <div className="pr-4 pl-4 mb-1">
+                                        <img src={item["image"]} alt=""/>
+                                    </div>
+                                    <div className={`${styles.count} mb-1`}>
+                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
+                                        <CurrencyIcon type="primary" />
+                                    </div>
+                                    <div className={styles.titleContainer}>
+                                        <span className="text text_type_main-default">{item.name}</span>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
+                <h2 className="text text_type_main-medium mb-6">Соусы</h2>
+                <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
+                    {data.map((item:any, index:number) => {
+                        if(item.type == 'sauce'){
+                            return (
+                                <div key={item['_id']} className={styles.burgerCard}>
+                                    <div className="pr-4 pl-4 mb-1">
+                                        <img src={item["image"]} alt=""/>
+                                    </div>
+                                    <div className={`${styles.count} mb-1`}>
+                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
+                                        <CurrencyIcon type="primary" />
+                                    </div>
+                                    <div className={styles.titleContainer}>
+                                        <span className="text text_type_main-default">{item.name}</span>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
+                <h2 className="text text_type_main-medium mb-6">Начинки</h2>
+                <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
+                    {data.map((item:any, index:number) => {
+                        if(item.type == 'main'){
+                            return (
+                                <div key={item['_id']} className={styles.burgerCard}>
+                                    <div className="pr-4 pl-4 mb-1">
+                                        <img src={item["image"]} alt=""/>
+                                    </div>
+                                    <div className={`${styles.count} mb-1`}>
+                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
+                                        <CurrencyIcon type="primary" />
+                                    </div>
+                                    <div className={styles.titleContainer}>
+                                        <span className="text text_type_main-default">{item.name}</span>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
             </div>
         </div>
     );
