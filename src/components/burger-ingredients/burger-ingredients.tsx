@@ -25,11 +25,11 @@ function BurgerIngredients({data}:any) {
                 <h2 className="text text_type_main-medium mb-6">Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {data.map((item:any, index:number) => {
-                        if(item.type == 'bun'){
+                        if(item.type === 'bun'){
                             return (
                                 <div key={item['_id']} className={styles.burgerCard}>
                                     <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt=""/>
+                                        <img src={item["image"]} alt={item["name"]}/>
                                     </div>
                                     <div className={`${styles.count} mb-1`}>
                                         <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
@@ -46,11 +46,11 @@ function BurgerIngredients({data}:any) {
                 <h2 className="text text_type_main-medium mb-6">Соусы</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {data.map((item:any, index:number) => {
-                        if(item.type == 'sauce'){
+                        if(item.type === 'sauce'){
                             return (
                                 <div key={item['_id']} className={styles.burgerCard}>
                                     <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt=""/>
+                                        <img src={item["image"]} alt={item["name"]}/>
                                     </div>
                                     <div className={`${styles.count} mb-1`}>
                                         <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
@@ -67,11 +67,11 @@ function BurgerIngredients({data}:any) {
                 <h2 className="text text_type_main-medium mb-6">Начинки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {data.map((item:any, index:number) => {
-                        if(item.type == 'main'){
+                        if(item.type === 'main'){
                             return (
                                 <div key={item['_id']} className={styles.burgerCard}>
                                     <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt=""/>
+                                        <img src={item["image"]} alt={item["name"]}/>
                                     </div>
                                     <div className={`${styles.count} mb-1`}>
                                         <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
@@ -91,7 +91,7 @@ function BurgerIngredients({data}:any) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array.isRequired
 };
 
 export default BurgerIngredients;

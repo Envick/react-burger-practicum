@@ -14,16 +14,16 @@ function BurgerConstructor({data}:any) {
                         <ConstructorElement
                             type="top"
                             isLocked={true}
-                            text={data[0]['name']}
+                            text={data[0]['name'] + " (верх)"}
                             price={data[0]['price']}
                             thumbnail={data[0]["image"]}
                         />
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {data.length > 1 && data[2]['type'] != 'bun' && data.slice(0, data.length-1).map((item:any) => (
+                    {data.length > 1 && data[2]['type'] != 'bun' && data.slice(1, data.length-1).map((item:any) => (
                         <div key={item["_id"]} className={`${styles.innerBurgerElement} pr-2`}>
-                            <img src={icon} alt="" className={styles.dragIcon}/>
+                            <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
                             <ConstructorElement
                                 text={item["name"]}
                                 price={item["price"]}
@@ -37,7 +37,7 @@ function BurgerConstructor({data}:any) {
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
-                            text={data[0]['name']}
+                            text={data[0]['name'] + " (низ)"}
                             price={data[0]['price']}
                             thumbnail={data[0]["image"]}
                         />
@@ -58,7 +58,7 @@ function BurgerConstructor({data}:any) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array.isRequired
 }
 
 export default BurgerConstructor;
