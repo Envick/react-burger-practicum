@@ -21,7 +21,7 @@ function BurgerConstructor({data}:any) {
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {data.length > 1 && data[2]['type'] != 'bun' && data.slice(1, data.length-1).map((item:any) => (
+                    {data.length > 1 && data[2]['type'] !== 'bun' && data.slice(1, data.length-1).map((item:any) => (
                         <div key={item["_id"]} className={`${styles.innerBurgerElement} pr-2`}>
                             <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
                             <ConstructorElement
