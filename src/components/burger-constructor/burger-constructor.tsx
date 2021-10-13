@@ -21,18 +21,22 @@ function BurgerConstructor({data}:any) {
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {data.length > 1 && data[2]['type'] !== 'bun' && data.slice(1, data.length-1).map((item:any) => (
-                        <div key={item["_id"]} className={`${styles.innerBurgerElement} pr-2`}>
-                            <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
-                            <ConstructorElement
-                                text={item["name"]}
-                                price={item["price"]}
-                                thumbnail={item["image"]}
-                            />
-                        </div>
-                    ))}
+                    {data.length > 1 && data.slice(1).map((item:any) => {
+                        if(item.type !== 'bun'){
+                            return (
+                                <div key={item["_id"]} className={`${styles.innerBurgerElement} pr-2`}>
+                                    <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
+                                    <ConstructorElement
+                                        text={item["name"]}
+                                        price={item["price"]}
+                                        thumbnail={item["image"]}
+                                    />
+                                </div>
+                            )
+                        }
+                    })}
                 </div>
-                {data[data.length - 1]?.type === 'bun' && (
+                {data[0]?.type === 'bun' && (
                     <div className="pr-4 mt-4">
                         <ConstructorElement
                             type="bottom"
