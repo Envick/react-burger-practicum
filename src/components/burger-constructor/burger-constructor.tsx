@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import icon from '../../images/drag-icon.svg'
 import styles from './burger-constructor.module.css'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+//@ts-ignore
+function BurgerConstructor({data}) {
 
-function BurgerConstructor({data}:any) {
+    const [showModal, setShowModal] = useState(false)
+
+    const [activeIngredient, setActiveIngredient] = useState({})
+
+    //@ts-ignore
+    function orderClickHandler(){
+        toggleOrderModal()
+    }
+    function toggleOrderModal(){
+        setShowModal(!showModal)
+    }
+
     return (
         <div className={`${styles.burgerConstructor} burger-constructor-container pl-4`}>
             <div className={`${styles.burger} mb-10`}>
@@ -53,10 +68,13 @@ function BurgerConstructor({data}:any) {
                     610
                     <CurrencyIcon type="primary"/>
                 </span>
-                <Button type="primary" size="large">
+                <Button onClick={orderClickHandler} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
+            <Modal isOpen={showModal} toggleModal={toggleOrderModal}>
+                <OrderDetails/>
+            </Modal>
         </div>
     );
 }

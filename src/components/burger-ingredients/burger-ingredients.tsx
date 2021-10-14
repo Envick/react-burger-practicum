@@ -35,7 +35,7 @@ function BurgerIngredients({data}:any) {
                     Начинка
                 </Tab>
             </div>
-            <Modal isOpen={showModal} toggleModal={toggleIngredientModal}>
+            <Modal isOpen={showModal} headerText="Детали ингредиента" toggleModal={toggleIngredientModal}>
                 <IngredientDetails ingredient={activeIngredient}/>
             </Modal>
             <div className={styles.ingredientItems}>

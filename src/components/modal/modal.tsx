@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 
 import styles from './modal.module.css'
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,14 +10,16 @@ import PropTypes from "prop-types";
 
 //@ts-ignore
 function Modal(props) {
-
     const root = document.querySelector('#modals')
 //@ts-ignore
-    const escClickHandler = (e) => {
+    const escClickHandler = useCallback((e) => {
         if(e.keyCode === 27 && props.isOpen){
             props.toggleModal()
         }
-    }
+        else{
+            e.preventDefault()
+        }
+    }, [props.isOpen])
 
     useEffect(() => {
 
