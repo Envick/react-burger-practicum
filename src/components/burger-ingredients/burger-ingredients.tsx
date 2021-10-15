@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css'
-import {CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
@@ -45,6 +45,7 @@ function BurgerIngredients({data}:any) {
                         if(item.type === 'bun'){
                             return (
                                 <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
+                                    <Counter count={1} size="default" />
                                     <div className="pr-4 pl-4 mb-1">
                                         <img src={item["image"]} alt={item["name"]}/>
                                     </div>
@@ -66,6 +67,7 @@ function BurgerIngredients({data}:any) {
                         if(item.type === 'sauce'){
                             return (
                                 <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
+                                    <Counter count={1} size="default" />
                                     <div className="pr-4 pl-4 mb-1">
                                         <img src={item["image"]} alt={item["name"]}/>
                                     </div>
@@ -87,6 +89,7 @@ function BurgerIngredients({data}:any) {
                         if(item.type === 'main'){
                             return (
                                 <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
+                                    <Counter count={1} size="default" />
                                     <div className="pr-4 pl-4 mb-1">
                                         <img src={item["image"]} alt={item["name"]}/>
                                     </div>
