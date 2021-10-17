@@ -12,8 +12,6 @@ function BurgerConstructor({data}) {
 
     const [showModal, setShowModal] = useState(false)
 
-    const [activeIngredient, setActiveIngredient] = useState({})
-
     //@ts-ignore
     function orderClickHandler(){
         toggleOrderModal()
