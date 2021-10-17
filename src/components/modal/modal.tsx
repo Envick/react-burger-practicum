@@ -50,7 +50,7 @@ function Modal(props) {
 
 Modal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    toggleModal: PropTypes.func,
+    toggleModal: PropTypes.func.isRequired,
     headerText: PropTypes.string,
     children: PropTypes.object
 }
