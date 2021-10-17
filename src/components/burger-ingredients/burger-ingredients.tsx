@@ -4,6 +4,7 @@ import styles from './burger-ingredients.module.css'
 import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {menuItemPropTypes} from "../../utils/constants";
 
 
 
@@ -36,7 +37,8 @@ function BurgerIngredients({data}:any) {
                 </Tab>
             </div>
             <Modal isOpen={showModal} headerText="Детали ингредиента" toggleModal={toggleIngredientModal}>
-                <IngredientDetails ingredient={activeIngredient}/>
+                { /*@ts-ignore*/}
+                {activeIngredient["_id"] && <IngredientDetails ingredient={activeIngredient}/>}
             </Modal>
             <div className={styles.ingredientItems}>
                 <h2 className="text text_type_main-medium mb-6">Булки</h2>
@@ -111,7 +113,7 @@ function BurgerIngredients({data}:any) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.array.isRequired
+    data: PropTypes.arrayOf(menuItemPropTypes).isRequired
 };
 
 export default BurgerIngredients;

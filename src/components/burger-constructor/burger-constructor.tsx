@@ -6,6 +6,7 @@ import styles from './burger-constructor.module.css'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import {menuItemPropTypes} from "../../utils/constants";
 //@ts-ignore
 function BurgerConstructor({data}) {
 
@@ -36,10 +37,10 @@ function BurgerConstructor({data}) {
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {data.length > 1 && data.slice(1).map((item:any) => {
+                    {data.length > 1 && data.slice(1).map((item:any, index:number) => {
                         if(item.type !== 'bun'){
                             return (
-                                <div key={item["_id"]} className={`${styles.innerBurgerElement} pr-2`}>
+                                <div key={index} className={`${styles.innerBurgerElement} pr-2`}>
                                     <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
                                     <ConstructorElement
                                         text={item["name"]}
@@ -80,7 +81,7 @@ function BurgerConstructor({data}) {
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array.isRequired
+    data: PropTypes.arrayOf(menuItemPropTypes).isRequired
 }
 
 export default BurgerConstructor;
