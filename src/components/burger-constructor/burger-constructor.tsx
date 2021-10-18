@@ -1,11 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from "prop-types";
 
 import icon from '../../images/drag-icon.svg'
 import styles from './burger-constructor.module.css'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import {menuItemPropTypes} from "../../utils/constants";
+//@ts-ignore
+function BurgerConstructor({data}) {
 
-function BurgerConstructor({data}:any) {
+    const [showModal, setShowModal] = useState(false)
+
+    //@ts-ignore
+    function orderClickHandler(){
+        toggleOrderModal()
+    }
+    function toggleOrderModal(){
+        setShowModal(!showModal)
+    }
+
     return (
         <div className={`${styles.burgerConstructor} burger-constructor-container pl-4`}>
             <div className={`${styles.burger} mb-10`}>
@@ -21,18 +35,22 @@ function BurgerConstructor({data}:any) {
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {data.length > 1 && data[2]['type'] != 'bun' && data.slice(1, data.length-1).map((item:any) => (
-                        <div key={item["_id"]} className={`${styles.innerBurgerElement} pr-2`}>
-                            <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
-                            <ConstructorElement
-                                text={item["name"]}
-                                price={item["price"]}
-                                thumbnail={item["image"]}
-                            />
-                        </div>
-                    ))}
+                    {data.length > 1 && data.slice(1).map((item:any, index:number) => {
+                        if(item.type !== 'bun'){
+                            return (
+                                <div key={index} className={`${styles.innerBurgerElement} pr-2`}>
+                                    <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
+                                    <ConstructorElement
+                                        text={item["name"]}
+                                        price={item["price"]}
+                                        thumbnail={item["image"]}
+                                    />
+                                </div>
+                            )
+                        }
+                    })}
                 </div>
-                {data[data.length - 1]?.type === 'bun' && (
+                {data[0]?.type === 'bun' && (
                     <div className="pr-4 mt-4">
                         <ConstructorElement
                             type="bottom"
@@ -49,16 +67,19 @@ function BurgerConstructor({data}:any) {
                     610
                     <CurrencyIcon type="primary"/>
                 </span>
-                <Button type="primary" size="large">
+                <Button onClick={orderClickHandler} type="primary" size="large">
                     Оформить заказ
                 </Button>
             </div>
+            <Modal isOpen={showModal} toggleModal={toggleOrderModal}>
+                <OrderDetails/>
+            </Modal>
         </div>
     );
 }
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array.isRequired
+    data: PropTypes.arrayOf(menuItemPropTypes).isRequired
 }
 
 export default BurgerConstructor;

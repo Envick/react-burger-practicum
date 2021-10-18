@@ -27,8 +27,10 @@
 }
 .burgerCard{
     flex: 1;
+    position: relative;
     min-width: 45%;
     max-width: 50%;
+    cursor: pointer;
 }
 .count{
     display: flex;

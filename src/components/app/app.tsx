@@ -1,12 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import {data} from "../../utils/data";
 import styles from './app.module.css';
 
+const URL = 'https://norma.nomoreparties.space/api/ingredients';
+
 function App() {
-  return (
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        fetch(URL)
+            .then(res => {
+                if(res.ok){
+                    return res.json()
+                }
+                return Promise.reject(res.status)
+            })
+            .then(res => setData(res.data))
+            .catch(e => console.log(e))
+    }, [])
+
+    return (
     <div className="app">
         <AppHeader/>
         <main>
@@ -20,8 +35,9 @@ function App() {
                 </section>
             </div>
         </main>
+
     </div>
-  );
+    );
 }
 
 export default App;

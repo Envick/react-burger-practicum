@@ -19,7 +19,7 @@
 .innerBurgerContainer{
     display: flex;
     flex-direction: column;
-    max-height: 448px;
+    max-height: 456px;
     gap: 16px;
     overflow-y: auto;
 }
