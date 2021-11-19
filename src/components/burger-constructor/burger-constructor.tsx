@@ -7,8 +7,9 @@ import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-deve
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {menuItemPropTypes} from "../../utils/constants";
+import {useSelector} from "react-redux";
 //@ts-ignore
-function BurgerConstructor({data}) {
+function BurgerConstructor() {
 
     const [showModal, setShowModal] = useState(false)
 
@@ -19,7 +20,7 @@ function BurgerConstructor({data}) {
     function toggleOrderModal(){
         setShowModal(!showModal)
     }
-
+    const data = useSelector((state: any) => state.constructorIngredients.ingredients)
     return (
         <div className={`${styles.burgerConstructor} burger-constructor-container pl-4`}>
             <div className={`${styles.burger} mb-10`}>
@@ -78,8 +79,5 @@ function BurgerConstructor({data}) {
     );
 }
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(menuItemPropTypes).isRequired
-}
 
 export default BurgerConstructor;

@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css'
 import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {menuItemPropTypes} from "../../utils/constants";
+import {useDispatch, useSelector} from "react-redux";
+import {getIngredients} from "../../services/actions/ingredients";
 
 
 
-function BurgerIngredients({data}:any) {
+function BurgerIngredients() {
     const [current, setCurrent] = useState('bun')
     const [showModal, setShowModal] = useState(false)
 
@@ -22,6 +24,11 @@ function BurgerIngredients({data}:any) {
     function toggleIngredientModal(){
         setShowModal(!showModal)
     }
+    const dispatch = useDispatch()
+    const data = useSelector((store:any) => store.ingredients.ingredients)
+    useEffect(() => {
+        dispatch(getIngredients())
+    })
 
     return (
         <div className={`${styles.ingredientsBlock}`}>
@@ -111,9 +118,5 @@ function BurgerIngredients({data}:any) {
         </div>
     );
 }
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(menuItemPropTypes).isRequired
-};
 
 export default BurgerIngredients;
