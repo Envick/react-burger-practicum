@@ -7,28 +7,29 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {menuItemPropTypes} from "../../utils/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/ingredients";
+import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState('bun')
     const [showModal, setShowModal] = useState(false)
-
-    const [activeIngredient, setActiveIngredient] = useState({})
+    const dispatch = useDispatch()
 
     //@ts-ignore
     function ingredientClickHandler(item){
-        setActiveIngredient(item)
+        dispatch({type: SET_ACTIVE_INGREDIENT, payload:item})
         toggleIngredientModal()
     }
     function toggleIngredientModal(){
         setShowModal(!showModal)
     }
-    const dispatch = useDispatch()
     const data = useSelector((store:any) => store.ingredients.ingredients)
+    const ingredientDetails = useSelector((store:any) => store.ingredientDetails)
     useEffect(() => {
         dispatch(getIngredients())
-    })
+    },[])
 
     return (
         <div className={`${styles.ingredientsBlock}`}>
@@ -45,71 +46,35 @@ function BurgerIngredients() {
             </div>
             <Modal isOpen={showModal} headerText="Детали ингредиента" toggleModal={toggleIngredientModal}>
                 { /*@ts-ignore*/}
-                {activeIngredient["_id"] && <IngredientDetails ingredient={activeIngredient}/>}
+                {ingredientDetails["_id"] && <IngredientDetails ingredient={ingredientDetails}/>}
             </Modal>
             <div className={styles.ingredientItems}>
                 <h2 className="text text_type_main-medium mb-6">Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any, index:number) => {
+                    {data.map((item:any) => {
                         if(item.type === 'bun'){
                             return (
-                                <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
-                                    <Counter count={1} size="default" />
-                                    <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt={item["name"]}/>
-                                    </div>
-                                    <div className={`${styles.count} mb-1`}>
-                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                    <div className={styles.titleContainer}>
-                                        <span className="text text_type_main-default">{item.name}</span>
-                                    </div>
-                                </div>
+                                <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
                             )
                         }
                     })}
                 </div>
                 <h2 className="text text_type_main-medium mb-6">Соусы</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any, index:number) => {
+                    {data.map((item:any) => {
                         if(item.type === 'sauce'){
                             return (
-                                <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
-                                    <Counter count={1} size="default" />
-                                    <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt={item["name"]}/>
-                                    </div>
-                                    <div className={`${styles.count} mb-1`}>
-                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                    <div className={styles.titleContainer}>
-                                        <span className="text text_type_main-default">{item.name}</span>
-                                    </div>
-                                </div>
+                                <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
                             )
                         }
                     })}
                 </div>
                 <h2 className="text text_type_main-medium mb-6">Начинки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any, index:number) => {
+                    {data.map((item:any) => {
                         if(item.type === 'main'){
                             return (
-                                <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
-                                    <Counter count={1} size="default" />
-                                    <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt={item["name"]}/>
-                                    </div>
-                                    <div className={`${styles.count} mb-1`}>
-                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                    <div className={styles.titleContainer}>
-                                        <span className="text text_type_main-default">{item.name}</span>
-                                    </div>
-                                </div>
+                                <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
                             )
                         }
                     })}

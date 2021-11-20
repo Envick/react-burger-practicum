@@ -1,5 +1,6 @@
 .burgerConstructor{
     width: 600px;
+    border: 2px solid transparent
 }
 .burger{
     display: flex;
