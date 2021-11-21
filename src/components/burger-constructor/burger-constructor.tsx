@@ -1,5 +1,4 @@
-import React, {useMemo, useState} from 'react';
-import icon from '../../images/drag-icon.svg'
+import React, {useCallback, useMemo, useState} from 'react';
 import styles from './burger-constructor.module.css'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
@@ -8,11 +7,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 import {
     ADD_CONSTRUCTOR_BUN,
-    ADD_CONSTRUCTOR_INGREDIENT,
+    ADD_CONSTRUCTOR_INGREDIENT, CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
     REMOVE_CONSTRUCTOR_INGREDIENT
 } from "../../services/actions/constructor-ingredients";
 import {DEC_INGREDIENT_COUNT, INC_INGREDIENT_COUNT} from "../../services/actions/ingredients";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
+import {take_order} from "../../services/actions/order-details";
 //@ts-ignore
 function BurgerConstructor() {
 
@@ -49,17 +49,16 @@ function BurgerConstructor() {
         collect: monitor => ({
             isHover: monitor.isOver()
         })
-    })
-    const [, constructorDropRef] = useDrop({
-        accept: 'constructorIngredient',
-        drop(item:any, monitor){
-            console.log(monitor.getItem())
-        },
-    })
-
+    }, [constructor.ingredients])
+    const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+        dispatch({type: CHANGE_CONSTRUCTOR_INGREDIENT_POSITION, payload:{dragIndex, hoverIndex}})
+    }, [dispatch]);
     //@ts-ignore
     function orderClickHandler(){
-        toggleOrderModal()
+        let data = constructor.ingredients.reduce((acc:any, item:any) => {
+            return [...acc, item['_id']]
+        }, [])
+        dispatch(take_order({ingredients: data}, toggleOrderModal))
     }
     function toggleOrderModal(){
         setShowModal(!showModal)
@@ -69,7 +68,11 @@ function BurgerConstructor() {
         dispatch({type:REMOVE_CONSTRUCTOR_INGREDIENT, payload: item['key']})
         dispatch({type:DEC_INGREDIENT_COUNT, payload: item['_id']})
     }
-
+    function renderIngredients(item:any, index:number){
+        return (
+            <ConstructorIngredient key={item.key} item={item} index={index} moveIngredient={moveIngredient} handleDeleteElement={handleDeleteElement} />
+        )
+    }
     let border = isHover ? '2px solid #4c4cff' : ''
 
     return (
@@ -86,12 +89,10 @@ function BurgerConstructor() {
                         />
                     </div>
                 )}
-                <div className={styles.innerBurgerContainer} ref={constructorDropRef}>
-                    {Array.isArray(constructor.ingredients) && constructor.ingredients.map((item:any, index:number) => {
-                            return (
-                                <ConstructorIngredient key={item.key} item={item} handleDeleteElement={handleDeleteElement} />
-                            )
-                    })}
+                <div className={styles.innerBurgerContainer}>
+                    {constructor.ingredients.map((item:any, index:number) => (
+                        renderIngredients(item, index)
+                    ))}
                 </div>
                 {constructor.bun && (
                     <div className="pr-4 mt-4">

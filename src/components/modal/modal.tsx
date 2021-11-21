@@ -19,7 +19,7 @@ function Modal(props) {
         else{
             e.preventDefault()
         }
-    }, [props.isOpen])
+    }, [props])
 
     useEffect(() => {
 

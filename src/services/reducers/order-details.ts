@@ -1,14 +1,32 @@
-import {SET_ACTIVE_ORDER_DETAILS} from "../actions/order-details";
+import {ORDER_FAILED, ORDER_SUCCESS, TAKE_ORDER} from "../actions/order-details";
 
 const initialState = {
-    orderDetails: {}
+    orderDetailsRequest: false,
+    orderDetailsFailed: false,
+    orderDetails: null
 }
 export const orderDetailsReducer = (state = initialState, action:any) => {
     switch(action.type){
-        case SET_ACTIVE_ORDER_DETAILS :{
+        case TAKE_ORDER :{
             return {
                 ...state,
+                orderDetailsRequest: true,
+                orderDetailsFailed: false
+            }
+        }
+        case ORDER_SUCCESS :{
+            return {
+                ...state,
+                orderDetailsRequest: false,
                 orderDetails: action.payload
+            }
+        }
+        case ORDER_FAILED :{
+            return {
+                ...state,
+                orderDetailsRequest: false,
+                orderDetailsFailed: true,
+                orderDetails: null
             }
         }
         default:{

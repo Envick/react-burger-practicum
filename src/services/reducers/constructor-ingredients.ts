@@ -1,6 +1,6 @@
 import {
     ADD_CONSTRUCTOR_BUN,
-    ADD_CONSTRUCTOR_INGREDIENT,
+    ADD_CONSTRUCTOR_INGREDIENT, CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
     REMOVE_CONSTRUCTOR_INGREDIENT
 } from "../actions/constructor-ingredients";
 
@@ -28,6 +28,14 @@ export const constructorReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 ingredients: state.ingredients.filter(item => item['key'] !== action.payload)
+            }
+        }
+        case CHANGE_CONSTRUCTOR_INGREDIENT_POSITION:{
+            const ingredients = [...state.ingredients];
+            ingredients.splice(action.payload.hoverIndex, 0, ingredients.splice(action.payload.dragIndex, 1)[0]);
+            return {
+                ...state,
+                ingredients: ingredients
             }
         }
         default:{
