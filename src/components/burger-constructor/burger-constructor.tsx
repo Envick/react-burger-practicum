@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import icon from '../../images/drag-icon.svg'
 import styles from './burger-constructor.module.css'
-import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,12 +12,21 @@ import {
     REMOVE_CONSTRUCTOR_INGREDIENT
 } from "../../services/actions/constructor-ingredients";
 import {DEC_INGREDIENT_COUNT, INC_INGREDIENT_COUNT} from "../../services/actions/ingredients";
+import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 //@ts-ignore
 function BurgerConstructor() {
 
     const [showModal, setShowModal] = useState(false)
     const dispatch = useDispatch()
     const constructor = useSelector((state: any) => state.constructorIngredients)
+    const totalPrice = useMemo(() => {
+        if(constructor.bun){
+            return constructor.bun.price * 2 + constructor.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0)
+        }
+        else{
+            return constructor.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0)
+        }
+    }, [constructor.bun, constructor.ingredients])
 //@ts-ignore
     const [{isHover},dropRef] = useDrop({
         accept: 'ingredient',
@@ -40,6 +49,12 @@ function BurgerConstructor() {
         collect: monitor => ({
             isHover: monitor.isOver()
         })
+    })
+    const [, constructorDropRef] = useDrop({
+        accept: 'constructorIngredient',
+        drop(item:any, monitor){
+            console.log(monitor.getItem())
+        },
     })
 
     //@ts-ignore
@@ -71,18 +86,10 @@ function BurgerConstructor() {
                         />
                     </div>
                 )}
-                <div className={styles.innerBurgerContainer}>
+                <div className={styles.innerBurgerContainer} ref={constructorDropRef}>
                     {Array.isArray(constructor.ingredients) && constructor.ingredients.map((item:any, index:number) => {
                             return (
-                                <div key={item.key} className={`${styles.innerBurgerElement} pr-2`}>
-                                    <img src={icon} alt="Иконка перетаскиваемого элемента" className={styles.dragIcon}/>
-                                    <ConstructorElement
-                                        text={item["name"]}
-                                        price={item["price"]}
-                                        thumbnail={item["image"]}
-                                        handleClose={() => handleDeleteElement(item)}
-                                    />
-                                </div>
+                                <ConstructorIngredient key={item.key} item={item} handleDeleteElement={handleDeleteElement} />
                             )
                     })}
                 </div>
@@ -98,6 +105,17 @@ function BurgerConstructor() {
                     </div>
                 )}
             </div>
+            {Boolean(constructor.bun || constructor.ingredients.length) && (
+                <div className={`${styles.offer} pr-4`}>
+                    <span className={`text text_type_digits-medium mr-10 ${styles.offerPrice}`}>
+                        {totalPrice}
+                        <CurrencyIcon type="primary"/>
+                    </span>
+                    <Button onClick={orderClickHandler} type="primary" size="large">
+                        Оформить заказ
+                    </Button>
+                </div>
+            )}
             <Modal isOpen={showModal} toggleModal={toggleOrderModal}>
                 <OrderDetails/>
             </Modal>

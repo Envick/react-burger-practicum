@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './burger-ingredients.module.css'
-import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {menuItemPropTypes} from "../../utils/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/ingredients";
 import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
@@ -16,7 +14,7 @@ function BurgerIngredients() {
     const [current, setCurrent] = useState('bun')
     const [showModal, setShowModal] = useState(false)
     const dispatch = useDispatch()
-
+    const ingredientsRef = useRef(null)
     //@ts-ignore
     function ingredientClickHandler(item){
         dispatch({type: SET_ACTIVE_INGREDIENT, payload:item})
@@ -27,8 +25,30 @@ function BurgerIngredients() {
     }
     const data = useSelector((store:any) => store.ingredients.ingredients)
     const ingredientDetails = useSelector((store:any) => store.ingredientDetails)
+    const scrollHandler = useCallback(() => {
+        let position = 283;
+        let containerTopMargin = 283
+        let closer = ''
+        document.querySelectorAll('.ingredient-text').forEach(item => {
+            let elHeight = item.getBoundingClientRect().top
+            let topPosition = Math.abs(containerTopMargin - elHeight)
+            if(topPosition < position){
+                position = topPosition
+                closer = item.id
+            }
+        })
+        if(closer){
+            setCurrent(closer)
+        }
+    }, [])
     useEffect(() => {
         dispatch(getIngredients())
+        //@ts-ignore
+        ingredientsRef.current.addEventListener('scroll', scrollHandler)
+        return () => {
+            //@ts-ignore
+            ingredientsRef.current.removeEventListener('scroll', scrollHandler)
+        }
     },[])
 
     return (
@@ -48,8 +68,8 @@ function BurgerIngredients() {
                 { /*@ts-ignore*/}
                 {ingredientDetails["_id"] && <IngredientDetails ingredient={ingredientDetails}/>}
             </Modal>
-            <div className={styles.ingredientItems}>
-                <h2 className="text text_type_main-medium mb-6">Булки</h2>
+            <div className={styles.ingredientItems} ref={ingredientsRef}>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="bun">Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {data.map((item:any) => {
                         if(item.type === 'bun'){
@@ -59,7 +79,7 @@ function BurgerIngredients() {
                         }
                     })}
                 </div>
-                <h2 className="text text_type_main-medium mb-6">Соусы</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="sauce">Соусы</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {data.map((item:any) => {
                         if(item.type === 'sauce'){
@@ -69,7 +89,7 @@ function BurgerIngredients() {
                         }
                     })}
                 </div>
-                <h2 className="text text_type_main-medium mb-6">Начинки</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="main">Начинки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {data.map((item:any) => {
                         if(item.type === 'main'){
