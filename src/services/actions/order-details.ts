@@ -4,13 +4,13 @@ export const TAKE_ORDER = 'TAKE_ORDER'
 export const ORDER_FAILED = 'ORDER_FAILED'
 export const ORDER_SUCCESS = 'ORDER_SUCCESS'
 
-export function take_order(data:any, toggleModal:any){
+export function takeOrder(burgerOrder:any, toggleModal:any){
     return function(dispatch:any){
         dispatch({type: TAKE_ORDER})
 
         fetch(TAKE_ORDER_URL, {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(burgerOrder),
             headers: {
                 'Content-Type': 'application/json'
             },

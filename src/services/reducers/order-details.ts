@@ -23,10 +23,9 @@ export const orderDetailsReducer = (state = initialState, action:any) => {
         }
         case ORDER_FAILED :{
             return {
-                ...state,
+                ...initialState,
                 orderDetailsRequest: false,
                 orderDetailsFailed: true,
-                orderDetails: null
             }
         }
         default:{

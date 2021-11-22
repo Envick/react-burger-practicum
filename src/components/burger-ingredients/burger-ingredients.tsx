@@ -23,11 +23,12 @@ function BurgerIngredients() {
     function toggleIngredientModal(){
         setShowModal(!showModal)
     }
-    const data = useSelector((store:any) => store.ingredients.ingredients)
+    const ingredients = useSelector((store:any) => store.ingredients.ingredients)
     const ingredientDetails = useSelector((store:any) => store.ingredientDetails)
     const scrollHandler = useCallback(() => {
-        let position = 283;
-        let containerTopMargin = 283
+        //@ts-ignore
+        let containerTopMargin = ingredientsRef?.current?.getBoundingClientRect()?.top
+        let position = containerTopMargin;
         let closer = ''
         document.querySelectorAll('.ingredient-text').forEach(item => {
             let elHeight = item.getBoundingClientRect().top
@@ -71,7 +72,7 @@ function BurgerIngredients() {
             <div className={styles.ingredientItems} ref={ingredientsRef}>
                 <h2 className="text text_type_main-medium mb-6 ingredient-text" id="bun">Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any) => {
+                    {ingredients.map((item:any) => {
                         if(item.type === 'bun'){
                             return (
                                 <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
@@ -81,7 +82,7 @@ function BurgerIngredients() {
                 </div>
                 <h2 className="text text_type_main-medium mb-6 ingredient-text" id="sauce">Соусы</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any) => {
+                    {ingredients.map((item:any) => {
                         if(item.type === 'sauce'){
                             return (
                                 <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
@@ -91,7 +92,7 @@ function BurgerIngredients() {
                 </div>
                 <h2 className="text text_type_main-medium mb-6 ingredient-text" id="main">Начинки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any) => {
+                    {ingredients.map((item:any) => {
                         if(item.type === 'main'){
                             return (
                                 <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>

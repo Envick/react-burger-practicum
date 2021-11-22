@@ -8,105 +8,100 @@ import {useDrop} from "react-dnd";
 import {
     ADD_CONSTRUCTOR_BUN,
     ADD_CONSTRUCTOR_INGREDIENT, CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
-    REMOVE_CONSTRUCTOR_INGREDIENT
+    REMOVE_CONSTRUCTOR_INGREDIENT, REPLACE_CONSTRUCTOR_BUN
 } from "../../services/actions/constructor-ingredients";
-import {DEC_INGREDIENT_COUNT, INC_INGREDIENT_COUNT} from "../../services/actions/ingredients";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
-import {take_order} from "../../services/actions/order-details";
+import {takeOrder} from "../../services/actions/order-details";
 //@ts-ignore
 function BurgerConstructor() {
 
     const [showModal, setShowModal] = useState(false)
+
     const dispatch = useDispatch()
-    const constructor = useSelector((state: any) => state.constructorIngredients)
+
+    const burgerConstructorState = useSelector((state: any) => state.constructorIngredients)
+
     const totalPrice = useMemo(() => {
-        if(constructor.bun){
-            return constructor.bun.price * 2 + constructor.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0)
-        }
-        else{
-            return constructor.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0)
-        }
-    }, [constructor.bun, constructor.ingredients])
+        return burgerConstructorState.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price || 0)
+    }, [burgerConstructorState.bun, burgerConstructorState.ingredients])
 //@ts-ignore
     const [{isHover},dropRef] = useDrop({
         accept: 'ingredient',
         drop(item:any){
             if(item.type !== 'bun'){
                 dispatch({type: ADD_CONSTRUCTOR_INGREDIENT, payload:item})
-                dispatch({type: INC_INGREDIENT_COUNT, payload: item['_id']})
             }
             else{
-                if(constructor.bun && constructor['bun']['_id'] !== item['_id']){
-                    dispatch({type: DEC_INGREDIENT_COUNT, payload: constructor['bun']['_id']})
-                }
-                else if(constructor.bun && constructor['bun']['_id'] === item['_id']){
-                    return
-                }
-                dispatch({type: ADD_CONSTRUCTOR_BUN, payload: item})
-                dispatch({type: INC_INGREDIENT_COUNT, payload: item['_id']})
+                dispatch({
+                    type: (burgerConstructorState.bun ? REPLACE_CONSTRUCTOR_BUN : ADD_CONSTRUCTOR_BUN),
+                    payload: item
+                })
             }
         },
         collect: monitor => ({
             isHover: monitor.isOver()
         })
-    }, [constructor.ingredients])
+    }, [burgerConstructorState.ingredients])
+
     const moveIngredient = useCallback((dragIndex, hoverIndex) => {
         dispatch({type: CHANGE_CONSTRUCTOR_INGREDIENT_POSITION, payload:{dragIndex, hoverIndex}})
     }, [dispatch]);
+
     //@ts-ignore
     function orderClickHandler(){
-        let data = constructor.ingredients.reduce((acc:any, item:any) => {
+        const burgerOrder = burgerConstructorState.ingredients.reduce((acc:any, item:any) => {
             return [...acc, item['_id']]
         }, [])
-        dispatch(take_order({ingredients: data}, toggleOrderModal))
+        dispatch(takeOrder({ingredients: burgerOrder}, toggleOrderModal))
     }
+
     function toggleOrderModal(){
         setShowModal(!showModal)
     }
 
     function handleDeleteElement(item:any){
         dispatch({type:REMOVE_CONSTRUCTOR_INGREDIENT, payload: item['key']})
-        dispatch({type:DEC_INGREDIENT_COUNT, payload: item['_id']})
     }
     function renderIngredients(item:any, index:number){
         return (
             <ConstructorIngredient key={item.key} item={item} index={index} moveIngredient={moveIngredient} handleDeleteElement={handleDeleteElement} />
         )
     }
-    let border = isHover ? '2px solid #4c4cff' : ''
+
+    const border = isHover ? '2px solid #4c4cff' : ''
 
     return (
         <div style={{border}} className={`${styles.burgerConstructor} burger-constructor-container pl-4`} ref={dropRef}>
             <div className={`${styles.burger} mb-10`}>
-                {constructor.bun && (
+                {burgerConstructorState.bun && (
                     <div className="pr-4 mb-4">
                         <ConstructorElement
                             type="top"
                             isLocked={true}
-                            text={constructor.bun['name'] + " (верх)"}
-                            price={constructor.bun['price']}
-                            thumbnail={constructor.bun["image"]}
+                            text={burgerConstructorState.bun['name'] + " (верх)"}
+                            price={burgerConstructorState.bun['price']}
+                            thumbnail={burgerConstructorState.bun["image"]}
                         />
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {constructor.ingredients.map((item:any, index:number) => (
+                    {burgerConstructorState.ingredients.map((item:any, index:number) => (
                         renderIngredients(item, index)
                     ))}
                 </div>
-                {constructor.bun && (
+                {burgerConstructorState.bun && (
                     <div className="pr-4 mt-4">
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
-                            text={constructor.bun['name'] + " (низ)"}
-                            price={constructor.bun['price']}
-                            thumbnail={constructor.bun["image"]}
+                            text={burgerConstructorState.bun['name'] + " (низ)"}
+                            price={burgerConstructorState.bun['price']}
+                            thumbnail={burgerConstructorState.bun["image"]}
                         />
                     </div>
                 )}
             </div>
-            {Boolean(constructor.bun || constructor.ingredients.length) && (
+            {Boolean(burgerConstructorState.bun || burgerConstructorState.ingredients.length) && (
                 <div className={`${styles.offer} pr-4`}>
                     <span className={`text text_type_digits-medium mr-10 ${styles.offerPrice}`}>
                         {totalPrice}
