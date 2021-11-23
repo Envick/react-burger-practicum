@@ -1,27 +1,56 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './burger-ingredients.module.css'
-import {Counter, CurrencyIcon, Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {menuItemPropTypes} from "../../utils/constants";
+import {useDispatch, useSelector} from "react-redux";
+import {getIngredients} from "../../services/actions/ingredients";
+import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 
 
-function BurgerIngredients({data}:any) {
+function BurgerIngredients() {
     const [current, setCurrent] = useState('bun')
     const [showModal, setShowModal] = useState(false)
-
-    const [activeIngredient, setActiveIngredient] = useState({})
-
+    const dispatch = useDispatch()
+    const ingredientsRef = useRef(null)
     //@ts-ignore
     function ingredientClickHandler(item){
-        setActiveIngredient(item)
+        dispatch({type: SET_ACTIVE_INGREDIENT, payload:item})
         toggleIngredientModal()
     }
     function toggleIngredientModal(){
         setShowModal(!showModal)
     }
+    const ingredients = useSelector((store:any) => store.ingredients.ingredients)
+    const ingredientDetails = useSelector((store:any) => store.ingredientDetails)
+    const scrollHandler = useCallback(() => {
+        //@ts-ignore
+        let containerTopMargin = ingredientsRef?.current?.getBoundingClientRect()?.top
+        let position = containerTopMargin;
+        let closer = ''
+        document.querySelectorAll('.ingredient-text').forEach(item => {
+            let elHeight = item.getBoundingClientRect().top
+            let topPosition = Math.abs(containerTopMargin - elHeight)
+            if(topPosition < position){
+                position = topPosition
+                closer = item.id
+            }
+        })
+        if(closer){
+            setCurrent(closer)
+        }
+    }, [])
+    useEffect(() => {
+        dispatch(getIngredients())
+        //@ts-ignore
+        ingredientsRef.current.addEventListener('scroll', scrollHandler)
+        return () => {
+            //@ts-ignore
+            ingredientsRef.current.removeEventListener('scroll', scrollHandler)
+        }
+    },[])
 
     return (
         <div className={`${styles.ingredientsBlock}`}>
@@ -38,71 +67,35 @@ function BurgerIngredients({data}:any) {
             </div>
             <Modal isOpen={showModal} headerText="Детали ингредиента" toggleModal={toggleIngredientModal}>
                 { /*@ts-ignore*/}
-                {activeIngredient["_id"] && <IngredientDetails ingredient={activeIngredient}/>}
+                {ingredientDetails["_id"] && <IngredientDetails ingredient={ingredientDetails}/>}
             </Modal>
-            <div className={styles.ingredientItems}>
-                <h2 className="text text_type_main-medium mb-6">Булки</h2>
+            <div className={styles.ingredientItems} ref={ingredientsRef}>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="bun">Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any, index:number) => {
+                    {ingredients.map((item:any) => {
                         if(item.type === 'bun'){
                             return (
-                                <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
-                                    <Counter count={1} size="default" />
-                                    <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt={item["name"]}/>
-                                    </div>
-                                    <div className={`${styles.count} mb-1`}>
-                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                    <div className={styles.titleContainer}>
-                                        <span className="text text_type_main-default">{item.name}</span>
-                                    </div>
-                                </div>
+                                <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
                             )
                         }
                     })}
                 </div>
-                <h2 className="text text_type_main-medium mb-6">Соусы</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="sauce">Соусы</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any, index:number) => {
+                    {ingredients.map((item:any) => {
                         if(item.type === 'sauce'){
                             return (
-                                <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
-                                    <Counter count={1} size="default" />
-                                    <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt={item["name"]}/>
-                                    </div>
-                                    <div className={`${styles.count} mb-1`}>
-                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                    <div className={styles.titleContainer}>
-                                        <span className="text text_type_main-default">{item.name}</span>
-                                    </div>
-                                </div>
+                                <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
                             )
                         }
                     })}
                 </div>
-                <h2 className="text text_type_main-medium mb-6">Начинки</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="main">Начинки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
-                    {data.map((item:any, index:number) => {
+                    {ingredients.map((item:any) => {
                         if(item.type === 'main'){
                             return (
-                                <div key={item['_id']} className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
-                                    <Counter count={1} size="default" />
-                                    <div className="pr-4 pl-4 mb-1">
-                                        <img src={item["image"]} alt={item["name"]}/>
-                                    </div>
-                                    <div className={`${styles.count} mb-1`}>
-                                        <span className={`${styles.countText} mr-2 text text_type_digits-default`}>{item["price"]}</span>
-                                        <CurrencyIcon type="primary" />
-                                    </div>
-                                    <div className={styles.titleContainer}>
-                                        <span className="text text_type_main-default">{item.name}</span>
-                                    </div>
-                                </div>
+                                <BurgerIngredient key={item['_id']} item={item} ingredientClickHandler={ingredientClickHandler}/>
                             )
                         }
                     })}
@@ -111,9 +104,5 @@ function BurgerIngredients({data}:any) {
         </div>
     );
 }
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(menuItemPropTypes).isRequired
-};
 
 export default BurgerIngredients;

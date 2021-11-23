@@ -1,0 +1,9 @@
+.innerBurgerElement{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.dragIcon{
+    margin-right: 13px;
+}

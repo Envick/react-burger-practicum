@@ -1,5 +1,6 @@
 .burgerConstructor{
     width: 600px;
+    border: 2px solid transparent
 }
 .burger{
     display: flex;
@@ -7,15 +8,7 @@
     align-items: flex-end;
 
 }
-.innerBurgerElement{
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-.dragIcon{
-    margin-right: 13px;
-}
+
 .innerBurgerContainer{
     display: flex;
     flex-direction: column;
