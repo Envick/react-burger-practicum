@@ -1,29 +1,31 @@
 import React from 'react';
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import styles from './app.module.css';
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import Home from "../../pages/home";
+import Login from "../../pages/login";
+import Register from "../../pages/register";
+import ForgotPassword from "../../pages/forgot-password";
+import ResetPassword from "../../pages/reset-password";
+import Profile from "../../pages/profile";
+import Ingredient from "../../pages/ingredient";
+import PageNotFound from "../../pages/page-not-found";
 
 function App() {
     return (
     <div className="app">
         <AppHeader/>
-        <main>
-            <div className="container">
-                <section className={styles.burgerSection}>
-                    <h1 className="text text_type_main-large mb-5 pt-10">Соберите бургер</h1>
-                    <div className={styles.burgerSectionContainer}>
-                        <DndProvider backend={HTML5Backend}>
-                            <BurgerIngredients />
-                            <BurgerConstructor />
-                        </DndProvider>
-                    </div>
-                </section>
-            </div>
-        </main>
-
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                <Route path="/reset-password" element={<ResetPassword/>}/>
+                <Route path="/profile" element={<Profile/>}/>
+                <Route path="/ingredient:id" element={<Ingredient/>}/>
+                <Route element={<PageNotFound/>}/>
+            </Routes>
+        </Router>
     </div>
     );
 }
