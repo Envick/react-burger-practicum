@@ -1,4 +1,5 @@
-import {LOGIN_URL, LOGOUT_URL, REGISTER_URL, TOKEN_URL} from "../../utils/constants";
+// @ts-ignore
+import {LOGIN_URL, LOGOUT_URL, REGISTER_URL} from "../../utils/constants";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_REQUEST_SUCCESS = 'REGISTER_REQUEST_SUCCESS'
@@ -12,46 +13,6 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
 export const LOGOUT_REQUEST_SUCCESS = 'LOGOUT_REQUEST_SUCCESS'
 export const LOGOUT_REQUEST_FAILED = 'LOGOUT_REQUEST_FAILED'
 
-export const TOKEN_REQUEST = 'TOKEN_REQUEST'
-export const TOKEN_REQUEST_SUCCESS = 'TOKEN_REQUEST_SUCCESS'
-export const TOKEN_REQUEST_FAILED = 'TOKEN_REQUEST_FAILED'
-
-export function updateToken(form:any){
-    return function(dispatch:any){
-        dispatch({type: TOKEN_REQUEST})
-
-        fetch(TOKEN_URL, {
-            method: 'POST',
-            body: JSON.stringify(form),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(res => {
-                if(res.ok){
-                    return res.json()
-                }
-            })
-            .then((res: any) => {
-                if(res && res.success){
-                    dispatch({
-                        type: TOKEN_REQUEST_SUCCESS,
-                        payload: res
-                    })
-                }
-                else{
-                    dispatch({
-                        type: TOKEN_REQUEST_FAILED
-                    })
-                }
-            })
-            .catch(e => {
-                dispatch({
-                    type: TOKEN_REQUEST_FAILED
-                })
-            })
-    }
-}
 export function logout(form:any){
     return function(dispatch:any){
         dispatch({type: LOGOUT_REQUEST})

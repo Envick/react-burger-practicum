@@ -7,6 +7,8 @@ export const LOGIN_URL = 'https://norma.nomoreparties.space/api/auth/login';
 export const LOGOUT_URL = 'https://norma.nomoreparties.space/api/auth/logout';
 export const TOKEN_URL = 'https://norma.nomoreparties.space/api/auth/token';
 export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user';
+export const SEND_EMAIL_URL = 'https://norma.nomoreparties.space/api/password-reset';
+export const RESET_PASSWORD_URL = 'https://norma.nomoreparties.space/api/auth/password-reset/reset';
 
 export const menuItemPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -58,13 +60,12 @@ const checkReponse = (res:any) => {
 };
 
 export const refreshToken = () => {
-    return fetch(`${TOKEN_URL}`, {
+    return fetch(TOKEN_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify({
-            // localStorage просто для примера, можно достать и из cookie, у вас тут свобода действий
             token: localStorage.getItem("refreshToken"),
         }),
     }).then(checkReponse);
@@ -74,9 +75,8 @@ export const retriableFetch = async (url:string, options = {}) => {
     try {
         const res = await fetch(url, options);
         const result = await checkReponse(res);
-        return result; // или можно сделать return await; главное дождаться промиса, чтоб catch сработал при ошибке
+        return result;
     } catch (err:any) {
-        // сначала убеждаемся, что это не любая ошибка, а нужно токен обновить
         if (err.message === "jwt expired") {
             const refreshData = await refreshToken(); // обновляем токен; пытаемся 1 раз, если не сложилось -- падаем с ошибкой
             localStorage.setItem("refreshToken", refreshData.refreshToken);
@@ -91,4 +91,15 @@ export const retriableFetch = async (url:string, options = {}) => {
             throw err;
         }
     }
+};
+
+
+export const sendResetEmail = (form:any) => {
+    return fetch(SEND_EMAIL_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(form)
+    }).then(checkReponse);
 };
