@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './register.module.css'
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../../services/actions/auth";
 
@@ -9,6 +9,9 @@ import {register} from "../../services/actions/auth";
 function Register() {
     const dispatch = useDispatch()
     const isAuth = useSelector((store: any) => store.auth.isAuth)
+
+    const state = useLocation().state;
+
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -25,9 +28,9 @@ function Register() {
 
 
 
-    return isAuth ? (
-        <Navigate to={"/"}/>
-    ) : (
+    if(isAuth) return  <Navigate to={ state?.from || '/' }/>
+
+    return (
         <div className="container">
             <form className={`${styles.form} main-form`} onSubmit={onSubmit}>
                 <h3 className={`text text_type_main-medium mb-6 ${styles.formMainText}`}>Регистрация</h3>

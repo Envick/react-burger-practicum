@@ -9,6 +9,7 @@ import ResetPassword from "../../pages/reset-password";
 import Profile from "../../pages/profile";
 import Ingredient from "../../pages/ingredient";
 import PageNotFound from "../../pages/page-not-found";
+import {ProtectedRoute} from "../protected-route/protected-route";
 
 function App() {
     return (
@@ -21,7 +22,9 @@ function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
-                <Route path="/profile" element={<Profile/>}/>
+                <Route  path='/profile' element={<ProtectedRoute/>}>
+                    <Route  path='/profile' element={<Profile/>}/>
+                </Route>
                 <Route path="/ingredient:id" element={<Ingredient/>}/>
                 <Route element={<PageNotFound/>}/>
             </Routes>

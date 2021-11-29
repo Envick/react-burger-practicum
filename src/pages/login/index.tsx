@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login.module.css'
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, useLocation} from "react-router-dom";
 import {login} from "../../services/actions/auth";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -12,6 +12,7 @@ function Login() {
 
     const isAuth = useSelector((store: any) => store.auth.isAuth)
 
+    const state = useLocation().state;
 
     const [form, setForm] = useState({
         email: '',
@@ -28,7 +29,7 @@ function Login() {
         dispatch(login(form))
     }
 
-    if(isAuth) return  <Navigate to={'/'}/>
+    if(isAuth) return  <Navigate to={ state?.from || '/' }/>
     return (
         <div className="container">
             <form className={`${styles.form} main-form`} onSubmit={onSubmit}>

@@ -52,3 +52,43 @@ export function getCookie(name:string) {
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+const checkReponse = (res:any) => {
+    return res.ok ? res.json() : res.json().then((err:any) => Promise.reject(err));
+};
+
+export const refreshToken = () => {
+    return fetch(`${TOKEN_URL}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+            // localStorage просто для примера, можно достать и из cookie, у вас тут свобода действий
+            token: localStorage.getItem("refreshToken"),
+        }),
+    }).then(checkReponse);
+};
+
+export const retriableFetch = async (url:string, options = {}) => {
+    try {
+        const res = await fetch(url, options);
+        const result = await checkReponse(res);
+        return result; // или можно сделать return await; главное дождаться промиса, чтоб catch сработал при ошибке
+    } catch (err:any) {
+        // сначала убеждаемся, что это не любая ошибка, а нужно токен обновить
+        if (err.message === "jwt expired") {
+            const refreshData = await refreshToken(); // обновляем токен; пытаемся 1 раз, если не сложилось -- падаем с ошибкой
+            localStorage.setItem("refreshToken", refreshData.refreshToken);
+            setCookie("accessToken", refreshData.accessToken); // тут для примера accessToken храним в куке
+            //@ts-ignore
+            option.headers = options.headers ?? {} // если в переданных опциях не было хедеров, добавляем в options пустой объект по ключу headers
+            //@ts-ignore
+            options.headers.authorization = refreshData.accessToken;
+            const res = await fetch(url, options); // повторяем оригинальный запрос с оригинальными options (+ дополнительным хедером)
+            return await checkReponse(res); // если все равно проваливаемся -- значит не судьба :/
+        } else {
+            throw err;
+        }
+    }
+};

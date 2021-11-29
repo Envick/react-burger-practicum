@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import styles from './profile.module.css'
 import {NavLink} from "react-router-dom";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {getProfile} from "../../services/actions/profile";
+import {getProfile, updateProfile} from "../../services/actions/profile";
 
-const Profile: React.FC = () => {
-    const profile = useSelector((state:any) => state.profile.profile)
+const Profile = () => {
+    const profile = useSelector((state:any) => state.profile)
 
     const [form, setForm] = useState({
         name: '',
@@ -22,7 +22,17 @@ const Profile: React.FC = () => {
 
     const onSubmit = (e:any) => {
         e.preventDefault()
+        dispatch(updateProfile(form))
     }
+    useMemo(() => {
+        if(!profile.profileRequest && profile.profile){
+            setForm({
+                ...form,
+                name: profile.profile.name,
+                email: profile.profile.email,
+            })
+        }
+    }, [profile])
 
     useEffect(() => {
         dispatch(getProfile())
