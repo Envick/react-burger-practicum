@@ -45,12 +45,12 @@ function BurgerIngredients() {
     useEffect(() => {
         dispatch(getIngredients())
         //@ts-ignore
-        ingredientsRef.current.addEventListener('scroll', scrollHandler)
+        ingredientsRef?.current?.addEventListener('scroll', scrollHandler)
         return () => {
             //@ts-ignore
-            ingredientsRef.current.removeEventListener('scroll', scrollHandler)
+            ingredientsRef?.current?.removeEventListener('scroll', scrollHandler)
         }
-    },[])
+    },[dispatch, scrollHandler])
 
     return (
         <div className={`${styles.ingredientsBlock}`}>

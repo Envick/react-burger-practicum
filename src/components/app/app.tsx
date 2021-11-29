@@ -13,8 +13,8 @@ import PageNotFound from "../../pages/page-not-found";
 function App() {
     return (
     <div className="app">
-        <AppHeader/>
         <Router>
+            <AppHeader/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
