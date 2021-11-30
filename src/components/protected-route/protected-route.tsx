@@ -1,7 +1,7 @@
 import {Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import {useSelector} from "react-redux";
 
-export function ProtectedRoute({ children, ...rest }:any) {
+export function ProtectedRoute({ children }:any) {
 
     const isAuth = useSelector((state: any) => state.auth.isAuth)
 

@@ -8,7 +8,7 @@ export const LOGOUT_URL = 'https://norma.nomoreparties.space/api/auth/logout';
 export const TOKEN_URL = 'https://norma.nomoreparties.space/api/auth/token';
 export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user';
 export const SEND_EMAIL_URL = 'https://norma.nomoreparties.space/api/password-reset';
-export const RESET_PASSWORD_URL = 'https://norma.nomoreparties.space/api/auth/password-reset/reset';
+export const RESET_PASSWORD_URL = 'https://norma.nomoreparties.space/api/password-reset/reset';
 
 export const menuItemPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -96,6 +96,16 @@ export const retriableFetch = async (url:string, options = {}) => {
 
 export const sendResetEmail = (form:any) => {
     return fetch(SEND_EMAIL_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(form)
+    }).then(checkReponse);
+};
+
+export const sendResetPasword = (form:any) => {
+    return fetch(RESET_PASSWORD_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json;charset=utf-8",

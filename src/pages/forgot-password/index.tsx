@@ -27,6 +27,8 @@ function ForgotPassword() {
                     navigate('/reset-password')
                 }
             })
+            .catch(e => console.log(e.message))
+
     }
     if(isAuth) return <Navigate to={"/"}/>
 

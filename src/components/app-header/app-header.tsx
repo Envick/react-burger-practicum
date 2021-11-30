@@ -9,10 +9,10 @@ function AppHeader() {
             <div className="container">
                 <nav className={styles.mainNav}>
                     <div className={styles.menuList}>
-                        <a href="/" className={`${styles.navItem} pl-5 pt-4 pr-5 pb-4`}>
+                        <Link to={"/"} className={`${styles.navItem} pl-5 pt-4 pr-5 pb-4`}>
                             <BurgerIcon type="primary"/>
                             <span  className="pl-2 text text_type_main-default">Конструктор</span>
-                        </a>
+                        </Link>
                         <a href="/" className={`${styles.navItem} pl-5 pt-4 pr-5 pb-4`}>
                             <ListIcon type="secondary"/>
                             <span className="pl-2 text text_type_main-default text_color_inactive">Лента заказов</span>

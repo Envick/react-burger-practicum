@@ -33,7 +33,6 @@ export function logout(form:any){
                 if(res && res.success){
                     dispatch({
                         type: LOGOUT_REQUEST_SUCCESS,
-                        payload: res
                     })
                 }
                 else{

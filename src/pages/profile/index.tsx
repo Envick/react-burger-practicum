@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {getProfile, updateProfile} from "../../services/actions/profile";
+import {logout} from "../../services/actions/auth";
 
 const Profile = () => {
     const profile = useSelector((state:any) => state.profile)
@@ -24,6 +25,11 @@ const Profile = () => {
         e.preventDefault()
         dispatch(updateProfile(form))
     }
+
+    const logOutHandler = () => {
+        dispatch(logout({token: localStorage.getItem('refreshToken')}))
+    }
+
     useMemo(() => {
         if(!profile.profileRequest && profile.profile){
             setForm({
@@ -46,7 +52,7 @@ const Profile = () => {
                     <div className={`${styles.asideMenus} mb-20`}>
                         <NavLink className={`${styles.asideLink} text text_type_main-medium`} to={"/profile"}>Профиль</NavLink>
                         <NavLink className={`${styles.asideLink} text text_type_main-medium`} to={"/profile/orders"}>История заказов</NavLink>
-                        <a className={`${styles.asideLink} text text_type_main-medium`}>Выход</a>
+                        <a onClick={logOutHandler} className={`${styles.asideLink} text text_type_main-medium`}>Выход</a>
                     </div>
                     <span className={"d-block text text_type_main-default text_color_inactive"}>
                 В этом разделе вы можете
