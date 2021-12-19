@@ -30,6 +30,14 @@ const Profile = () => {
         dispatch(logout({token: localStorage.getItem('refreshToken')}))
     }
 
+    const onCancelClick = () => {
+        setForm({
+            name: profile.profile.name,
+            email: profile.profile.email,
+            password: ''
+        })
+    }
+
     useMemo(() => {
         if(!profile.profileRequest && profile.profile){
             setForm({
@@ -88,7 +96,7 @@ const Profile = () => {
                         />
                     </div>
                     <div className={styles.buttons}>
-                        <button className={`mr-5 pl-2 pt-4 pr-2 pb-4 text text_type_main-default ${styles.cancelButton}`}>
+                        <button onClick={onCancelClick} type="button" className={`mr-5 pl-2 pt-4 pr-2 pb-4 text text_type_main-default ${styles.cancelButton}`}>
                             Отмена
                         </button>
                         <Button type="primary" size="large">

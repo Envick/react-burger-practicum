@@ -55,7 +55,7 @@ export function getCookie(name:string) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-const checkReponse = (res:any) => {
+const checkResponse = (res:any) => {
     return res.ok ? res.json() : res.json().then((err:any) => Promise.reject(err));
 };
 
@@ -68,16 +68,16 @@ export const refreshToken = () => {
         body: JSON.stringify({
             token: localStorage.getItem("refreshToken"),
         }),
-    }).then(checkReponse);
+    }).then(checkResponse);
 };
 
 export const retriableFetch = async (url:string, options = {}) => {
     try {
         const res = await fetch(url, options);
-        const result = await checkReponse(res);
+        const result = await checkResponse(res);
         return result;
     } catch (err:any) {
-        if (err.message === "jwt expired") {
+        if (err.message === "jwt malformed") {
             const refreshData = await refreshToken(); // обновляем токен; пытаемся 1 раз, если не сложилось -- падаем с ошибкой
             localStorage.setItem("refreshToken", refreshData.refreshToken);
             setCookie("accessToken", refreshData.accessToken); // тут для примера accessToken храним в куке
@@ -86,7 +86,7 @@ export const retriableFetch = async (url:string, options = {}) => {
             //@ts-ignore
             options.headers.authorization = refreshData.accessToken;
             const res = await fetch(url, options); // повторяем оригинальный запрос с оригинальными options (+ дополнительным хедером)
-            return await checkReponse(res); // если все равно проваливаемся -- значит не судьба :/
+            return await checkResponse(res); // если все равно проваливаемся -- значит не судьба :/
         } else {
             throw err;
         }
@@ -101,7 +101,7 @@ export const sendResetEmail = (form:any) => {
             "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify(form)
-    }).then(checkReponse);
+    }).then(checkResponse);
 };
 
 export const sendResetPasword = (form:any) => {
@@ -111,5 +111,5 @@ export const sendResetPasword = (form:any) => {
             "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify(form)
-    }).then(checkReponse);
+    }).then(checkResponse);
 };

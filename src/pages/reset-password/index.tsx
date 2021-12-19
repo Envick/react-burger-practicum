@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './reset-password.module.css'
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {sendResetPasword} from "../../utils/constants";
 import {useSelector} from "react-redux";
 
@@ -17,6 +17,8 @@ function ResetPassword() {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
+    const location = useLocation()
+
     const navigate = useNavigate()
 
     const onSubmit = async (e:any) => {
@@ -30,7 +32,7 @@ function ResetPassword() {
             .catch(e => console.log(e.message))
 
     }
-    if(isAuth) return <Navigate to={"/"}/>
+    if(isAuth || !location.state?.fromForgotPassword) return <Navigate to={"/"}/>
 
     return (
         <div className="container">

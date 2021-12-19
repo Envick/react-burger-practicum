@@ -24,7 +24,7 @@ function ForgotPassword() {
         sendResetEmail(form)
             .then(res => {
                 if(res.success){
-                    navigate('/reset-password')
+                    navigate('/reset-password', {state: {fromForgotPassword: true}})
                 }
             })
             .catch(e => console.log(e.message))
