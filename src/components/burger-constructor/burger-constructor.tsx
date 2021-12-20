@@ -12,17 +12,22 @@ import {
 } from "../../services/actions/constructor-ingredients";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 import {takeOrder} from "../../services/actions/order-details";
+import {useNavigate} from "react-router-dom";
 //@ts-ignore
 function BurgerConstructor() {
 
     const [showModal, setShowModal] = useState(false)
+
+    const isAuth = useSelector((store: any) => store.auth.isAuth)
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
     const burgerConstructorState = useSelector((state: any) => state.constructorIngredients)
 
     const totalPrice = useMemo(() => {
-        return burgerConstructorState.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price || 0)
+        return burgerConstructorState.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price * 2 || 0)
     }, [burgerConstructorState.bun, burgerConstructorState.ingredients])
 //@ts-ignore
     const [{isHover},dropRef] = useDrop({
@@ -49,10 +54,15 @@ function BurgerConstructor() {
 
     //@ts-ignore
     function orderClickHandler(){
-        const burgerOrder = burgerConstructorState.ingredients.reduce((acc:any, item:any) => {
-            return [...acc, item['_id']]
-        }, [])
-        dispatch(takeOrder({ingredients: burgerOrder}, toggleOrderModal))
+        if(isAuth){
+            const burgerOrder = burgerConstructorState.ingredients.reduce((acc:any, item:any) => {
+                return [...acc, item['_id']]
+            }, [])
+            dispatch(takeOrder({ingredients: burgerOrder}, toggleOrderModal))
+        }
+        else{
+            navigate('/login')
+        }
     }
 
     function toggleOrderModal(){

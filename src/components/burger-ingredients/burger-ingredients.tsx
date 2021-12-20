@@ -1,28 +1,24 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/ingredients";
 import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-
-
+import {useNavigate} from "react-router-dom";
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState('bun')
-    const [showModal, setShowModal] = useState(false)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const ingredientsRef = useRef(null)
+
     //@ts-ignore
     function ingredientClickHandler(item){
         dispatch({type: SET_ACTIVE_INGREDIENT, payload:item})
-        toggleIngredientModal()
+        navigate(`/ingredients/${item._id}`, {state: {background: '/'}})
     }
-    function toggleIngredientModal(){
-        setShowModal(!showModal)
-    }
+
     const ingredients = useSelector((store:any) => store.ingredients.ingredients)
     const ingredientDetails = useSelector((store:any) => store.ingredientDetails)
     const scrollHandler = useCallback(() => {
@@ -43,14 +39,13 @@ function BurgerIngredients() {
         }
     }, [])
     useEffect(() => {
-        dispatch(getIngredients())
         //@ts-ignore
-        ingredientsRef.current.addEventListener('scroll', scrollHandler)
+        ingredientsRef?.current?.addEventListener('scroll', scrollHandler)
         return () => {
             //@ts-ignore
-            ingredientsRef.current.removeEventListener('scroll', scrollHandler)
+            ingredientsRef?.current?.removeEventListener('scroll', scrollHandler)
         }
-    },[])
+    },[dispatch, scrollHandler])
 
     return (
         <div className={`${styles.ingredientsBlock}`}>
@@ -65,10 +60,7 @@ function BurgerIngredients() {
                     Начинка
                 </Tab>
             </div>
-            <Modal isOpen={showModal} headerText="Детали ингредиента" toggleModal={toggleIngredientModal}>
-                { /*@ts-ignore*/}
-                {ingredientDetails["_id"] && <IngredientDetails ingredient={ingredientDetails}/>}
-            </Modal>
+
             <div className={styles.ingredientItems} ref={ingredientsRef}>
                 <h2 className="text text_type_main-medium mb-6 ingredient-text" id="bun">Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>

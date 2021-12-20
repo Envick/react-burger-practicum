@@ -1,0 +1,32 @@
+.aside{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+}
+.asideMenus{
+    display: flex;
+    flex-direction: column;
+}
+.asideLink{
+    height: 64px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.profileContent{
+    display: flex;
+}
+.profileOptions{
+    width: 480px;
+}
+.buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+.cancelButton{
+    color: #4C4CFF;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}

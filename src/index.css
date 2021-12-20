@@ -28,3 +28,9 @@ a{
   min-width: 536px;
   width: 100%;
 }
+.main-form .input, .main-form .input__container{
+  width: 100%;
+}
+.d-block{
+  display: block !important;
+}
