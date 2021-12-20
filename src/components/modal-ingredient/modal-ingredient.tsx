@@ -9,8 +9,8 @@ function ModalIngredient({isOpen}:any) {
     const {id} = useParams()
     const ingredients = useSelector((state:any) => state.ingredients.ingredients)
     const activeIngredient = useMemo(() => {
-        return ingredients.find((item:any) => item.id === id)
-    }, [ingredients])
+        return ingredients.find((item:any) => item._id === id)
+    }, [id,ingredients])
     const navigate = useNavigate()
     function toggleIngredientModal(){
         navigate('/')

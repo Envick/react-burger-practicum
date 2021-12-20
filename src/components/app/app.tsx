@@ -48,7 +48,9 @@ function AppRoutes () {
                 <Route path="/ingredients/:id" element={<Ingredient/>}/>
                 <Route element={<PageNotFound/>}/>
             </Routes>
-            {background && <ModalIngredient isOpen={Boolean(background)}/>}
+            <Routes>
+                {background && <Route path="/ingredients/:id" element={<ModalIngredient isOpen={Boolean(background)}/>}/>}
+            </Routes>
         </>
     )
 }

@@ -80,9 +80,10 @@ export const retriableFetch = async (url:string, options = {}) => {
         if (err.message === "jwt malformed") {
             const refreshData = await refreshToken(); // обновляем токен; пытаемся 1 раз, если не сложилось -- падаем с ошибкой
             localStorage.setItem("refreshToken", refreshData.refreshToken);
-            setCookie("accessToken", refreshData.accessToken); // тут для примера accessToken храним в куке
+            const authToken =   refreshData.accessToken.split('Bearer ')[1];
+            setCookie("accessToken", authToken); // тут для примера accessToken храним в куке
             //@ts-ignore
-            option.headers = options.headers ?? {} // если в переданных опциях не было хедеров, добавляем в options пустой объект по ключу headers
+            options.headers = options.headers ?? {} // если в переданных опциях не было хедеров, добавляем в options пустой объект по ключу headers
             //@ts-ignore
             options.headers.authorization = refreshData.accessToken;
             const res = await fetch(url, options); // повторяем оригинальный запрос с оригинальными options (+ дополнительным хедером)
