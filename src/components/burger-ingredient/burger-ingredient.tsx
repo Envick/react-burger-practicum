@@ -1,16 +1,22 @@
-import React, {useCallback} from 'react';
+import React, {FC, useCallback} from 'react';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {menuItemPropTypes} from "../../utils/constants";
-import PropTypes from "prop-types";
+import {TIngredient} from "../../utils/constants";
 import {useDrag} from "react-dnd";
 import styles from './burger-ingredients.module.css'
 import {useSelector} from "react-redux";
-const BurgerIngredient = ({item, ingredientClickHandler}:any) => {
+
+interface TBurgerIngredientProps {
+    item: TIngredient,
+    ingredientClickHandler: (item: TIngredient) => void
+}
+
+const BurgerIngredient: FC<TBurgerIngredientProps> = ({item, ingredientClickHandler}) => {
 
     const [,dragRef] = useDrag({
         type: 'ingredient',
         item: item
     })
+
     const constructorIngredientsState = useSelector((state:any) => state.constructorIngredients)
 
     const getIngredientCount = useCallback(() => {
@@ -40,10 +46,5 @@ const BurgerIngredient = ({item, ingredientClickHandler}:any) => {
         </div>
     );
 };
-
-BurgerIngredient.propTypes = {
-    item: menuItemPropTypes,
-    ingredientClickHandler: PropTypes.func
-}
 
 export default BurgerIngredient;

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import styles from './profile.module.css'
 import {NavLink} from "react-router-dom";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,7 +9,7 @@ import {logout} from "../../services/actions/auth";
 const Profile = () => {
     const profile = useSelector((state:any) => state.profile)
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{name: string, email:string, password: string}>({
         name: '',
         email: '',
         password: ''
@@ -17,20 +17,21 @@ const Profile = () => {
 
     const dispatch = useDispatch()
 
-    const onChange = (e:any) => {
+    const onChange = (e:any): void => {
         setForm({...form,[e.target.name]: e.target.value})
     }
 
-    const onSubmit = (e:any) => {
+    const onSubmit = (e:any): void => {
         e.preventDefault()
         dispatch(updateProfile(form))
     }
 
-    const logOutHandler = () => {
+    const logOutHandler = (e:any): void => {
+        e.preventDefault()
         dispatch(logout({token: localStorage.getItem('refreshToken')}))
     }
 
-    const onCancelClick = () => {
+    const onCancelClick = () : void=> {
         setForm({
             name: profile.profile.name,
             email: profile.profile.email,
@@ -50,7 +51,7 @@ const Profile = () => {
 
     useEffect(() => {
         dispatch(getProfile())
-    }, [])
+    }, [dispatch])
 
 
     return (
@@ -60,7 +61,7 @@ const Profile = () => {
                     <div className={`${styles.asideMenus} mb-20`}>
                         <NavLink className={`${styles.asideLink} text text_type_main-medium`} to={"/profile"}>Профиль</NavLink>
                         <NavLink className={`${styles.asideLink} text text_type_main-medium`} to={"/profile/orders"}>История заказов</NavLink>
-                        <a onClick={logOutHandler} className={`${styles.asideLink} text text_type_main-medium`}>Выход</a>
+                        <a href="/" onClick={logOutHandler} className={`${styles.asideLink} text text_type_main-medium`}>Выход</a>
                     </div>
                     <span className={"d-block text text_type_main-default text_color_inactive"}>
                 В этом разделе вы можете

@@ -7,13 +7,13 @@ import {useSelector} from "react-redux";
 
 
 function ForgotPassword() {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{email: string}>({
         email: '',
     })
 
-    const isAuth = useSelector((state:any) => state.auth.isAuth)
+    const isAuth: boolean = useSelector((state:any) => state.auth.isAuth)
 
-    const onChange = (e:any) => {
+    const onChange = (e:any): void => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
@@ -30,6 +30,7 @@ function ForgotPassword() {
             .catch(e => console.log(e.message))
 
     }
+
     if(isAuth) return <Navigate to={"/"}/>
 
     return (

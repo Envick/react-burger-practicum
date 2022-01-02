@@ -7,13 +7,14 @@ import {useSelector} from "react-redux";
 
 
 function ResetPassword() {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{password: string, token: string}>({
         password: '',
         token: '',
     })
-    const isAuth = useSelector((state:any) => state.auth.isAuth)
 
-    const onChange = (e:any) => {
+    const isAuth: boolean = useSelector((state:any) => state.auth.isAuth)
+
+    const onChange = (e:any): void => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 

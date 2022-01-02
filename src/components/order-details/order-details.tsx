@@ -5,7 +5,6 @@ import styles from './order-details.module.css'
 import doneImg from '../../images/done.png'
 import {useSelector} from "react-redux";
 
-//@ts-ignore
 function OrderDetails() {
     const orderDetails = useSelector((state: any) => state.orderDetails.orderDetails)
 

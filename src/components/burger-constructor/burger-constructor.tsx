@@ -13,12 +13,13 @@ import {
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 import {takeOrder} from "../../services/actions/order-details";
 import {useNavigate} from "react-router-dom";
-//@ts-ignore
+import {TIngredient} from "../../utils/constants";
+
 function BurgerConstructor() {
 
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState<boolean>(false)
 
-    const isAuth = useSelector((store: any) => store.auth.isAuth)
+    const isAuth: boolean = useSelector((store: any) => store.auth.isAuth)
 
     const navigate = useNavigate()
 
@@ -26,10 +27,10 @@ function BurgerConstructor() {
 
     const burgerConstructorState = useSelector((state: any) => state.constructorIngredients)
 
-    const totalPrice = useMemo(() => {
+    const totalPrice = useMemo<number>(() => {
         return burgerConstructorState.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price * 2 || 0)
     }, [burgerConstructorState.bun, burgerConstructorState.ingredients])
-//@ts-ignore
+
     const [{isHover},dropRef] = useDrop({
         accept: 'ingredient',
         drop(item:any){
@@ -53,9 +54,9 @@ function BurgerConstructor() {
     }, [dispatch]);
 
     //@ts-ignore
-    function orderClickHandler(){
+    function orderClickHandler(): void{
         if(isAuth){
-            const burgerOrder = burgerConstructorState.ingredients.reduce((acc:any, item:any) => {
+            const burgerOrder: string[] = burgerConstructorState.ingredients.reduce((acc:any, item:any) => {
                 return [...acc, item['_id']]
             }, [])
             dispatch(takeOrder({ingredients: burgerOrder}, toggleOrderModal))
@@ -65,14 +66,14 @@ function BurgerConstructor() {
         }
     }
 
-    function toggleOrderModal(){
+    function toggleOrderModal(): void{
         setShowModal(!showModal)
     }
 
-    function handleDeleteElement(item:any){
+    function handleDeleteElement(item:TIngredient): void{
         dispatch({type:REMOVE_CONSTRUCTOR_INGREDIENT, payload: item['key']})
     }
-    function renderIngredients(item:any, index:number){
+    function renderIngredients(item:TIngredient, index:number){
         return (
             <ConstructorIngredient key={item.key} item={item} index={index} moveIngredient={moveIngredient} handleDeleteElement={handleDeleteElement} />
         )
@@ -95,7 +96,7 @@ function BurgerConstructor() {
                     </div>
                 )}
                 <div className={styles.innerBurgerContainer}>
-                    {burgerConstructorState.ingredients.map((item:any, index:number) => (
+                    {burgerConstructorState.ingredients.map((item:TIngredient, index:number) => (
                         renderIngredients(item, index)
                     ))}
                 </div>

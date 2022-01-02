@@ -1,29 +1,38 @@
-import PropTypes from "prop-types";
 
-export const GET_INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
-export const TAKE_ORDER_URL = 'https://norma.nomoreparties.space/api/orders';
-export const REGISTER_URL = 'https://norma.nomoreparties.space/api/auth/register';
-export const LOGIN_URL = 'https://norma.nomoreparties.space/api/auth/login';
-export const LOGOUT_URL = 'https://norma.nomoreparties.space/api/auth/logout';
-export const TOKEN_URL = 'https://norma.nomoreparties.space/api/auth/token';
-export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user';
-export const SEND_EMAIL_URL = 'https://norma.nomoreparties.space/api/password-reset';
-export const RESET_PASSWORD_URL = 'https://norma.nomoreparties.space/api/password-reset/reset';
+export const GET_INGREDIENTS_URL: string = 'https://norma.nomoreparties.space/api/ingredients';
+export const TAKE_ORDER_URL: string = 'https://norma.nomoreparties.space/api/orders';
+export const REGISTER_URL: string = 'https://norma.nomoreparties.space/api/auth/register';
+export const LOGIN_URL: string = 'https://norma.nomoreparties.space/api/auth/login';
+export const LOGOUT_URL: string = 'https://norma.nomoreparties.space/api/auth/logout';
+export const TOKEN_URL: string = 'https://norma.nomoreparties.space/api/auth/token';
+export const PROFILE_URL: string = 'https://norma.nomoreparties.space/api/auth/user';
+export const SEND_EMAIL_URL: string = 'https://norma.nomoreparties.space/api/password-reset';
+export const RESET_PASSWORD_URL: string = 'https://norma.nomoreparties.space/api/password-reset/reset';
 
-export const menuItemPropTypes = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
-});
+export type TIngredient = {
+    _id: string,
+    key: string,
+    name: string,
+    type: string,
+    proteins: number,
+    fat: number,
+    carbohydrates: number,
+    calories: number,
+    price: number,
+    image: string,
+    image_mobile: string,
+    image_large: string,
+    __v: number,
+}
+
+export type TClientRect = {
+    top: number,
+    left: number,
+    bottom: number,
+    right: number,
+    width: number,
+    height: number
+}
 
 export function setCookie(name:string, value:any, props?:any) {
     props = props || {};

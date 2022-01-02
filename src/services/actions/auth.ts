@@ -1,4 +1,3 @@
-// @ts-ignore
 import {LOGIN_URL, LOGOUT_URL, REGISTER_URL} from "../../utils/constants";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'

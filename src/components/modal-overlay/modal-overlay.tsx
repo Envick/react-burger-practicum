@@ -1,18 +1,15 @@
-import React from 'react';
-
+import React, {FC} from 'react';
 import styles from './modal-overlay.module.css'
-import PropTypes from "prop-types";
 
-//@ts-ignore
-function ModalOverlay({isOpen, toggleModal}) {
-    return (
-        <div onClick={toggleModal} className={`${styles.modalOverlay} ${isOpen && styles.showOverlay}`}></div>
-    );
+interface IModalOverlayProps {
+    isOpen: boolean,
+    toggleModal: () => void
 }
 
-ModalOverlay.propTypes = {
-    isOpen: PropTypes.bool,
-    toggleModal: PropTypes.func
+const ModalOverlay: FC<IModalOverlayProps> = ({isOpen, toggleModal}) => {
+    return (
+        <div onClick={toggleModal} className={`${styles.modalOverlay} ${isOpen && styles.showOverlay}`}/>
+    );
 }
 
 export default ModalOverlay;

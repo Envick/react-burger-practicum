@@ -18,7 +18,7 @@ function App() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getIngredients())
-    }, [])
+    }, [dispatch])
     return (
         <div className="app">
             <Router >

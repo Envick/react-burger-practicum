@@ -2,28 +2,28 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {getIngredients} from "../../services/actions/ingredients";
 import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import {useNavigate} from "react-router-dom";
+import {TIngredient} from "../../utils/constants";
 
 function BurgerIngredients() {
-    const [current, setCurrent] = useState('bun')
+    const [current, setCurrent] = useState<string>('bun')
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const ingredientsRef = useRef(null)
+    const ingredientsRef = useRef<HTMLDivElement>(null)
 
     //@ts-ignore
-    function ingredientClickHandler(item){
+    function ingredientClickHandler(item: TIngredient){
         dispatch({type: SET_ACTIVE_INGREDIENT, payload:item})
         navigate(`/ingredients/${item._id}`, {state: {background: '/'}})
     }
 
     const ingredients = useSelector((store:any) => store.ingredients.ingredients)
-    const ingredientDetails = useSelector((store:any) => store.ingredientDetails)
+    
     const scrollHandler = useCallback(() => {
         //@ts-ignore
-        let containerTopMargin = ingredientsRef?.current?.getBoundingClientRect()?.top
+        let containerTopMargin: number = ingredientsRef?.current?.getBoundingClientRect()?.top
         let position = containerTopMargin;
         let closer = ''
         document.querySelectorAll('.ingredient-text').forEach(item => {
