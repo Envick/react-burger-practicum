@@ -28,12 +28,12 @@ function BurgerConstructor() {
     const burgerConstructorState = useSelector((state: any) => state.constructorIngredients)
 
     const totalPrice = useMemo<number>(() => {
-        return burgerConstructorState.ingredients.reduce((acc:number, item:any) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price * 2 || 0)
+        return burgerConstructorState.ingredients.reduce((acc:number, item:TIngredient) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price * 2 || 0)
     }, [burgerConstructorState.bun, burgerConstructorState.ingredients])
 
     const [{isHover},dropRef] = useDrop({
         accept: 'ingredient',
-        drop(item:any){
+        drop(item:TIngredient){
             if(item.type !== 'bun'){
                 dispatch({type: ADD_CONSTRUCTOR_INGREDIENT, payload:item})
             }
@@ -53,10 +53,9 @@ function BurgerConstructor() {
         dispatch({type: CHANGE_CONSTRUCTOR_INGREDIENT_POSITION, payload:{dragIndex, hoverIndex}})
     }, [dispatch]);
 
-    //@ts-ignore
     function orderClickHandler(): void{
         if(isAuth){
-            const burgerOrder: string[] = burgerConstructorState.ingredients.reduce((acc:any, item:any) => {
+            const burgerOrder: string[] = burgerConstructorState.ingredients.reduce((acc: string[], item:TIngredient) => {
                 return [...acc, item['_id']]
             }, [])
             dispatch(takeOrder({ingredients: burgerOrder}, toggleOrderModal))

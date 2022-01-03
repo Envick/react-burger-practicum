@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './forgot-password.module.css'
 import {Link, Navigate, useNavigate} from "react-router-dom";
-import {sendResetEmail} from "../../utils/constants";
+import {sendResetEmail} from "../../utils/utils";
 import {useSelector} from "react-redux";
 
 
@@ -13,13 +13,13 @@ function ForgotPassword() {
 
     const isAuth: boolean = useSelector((state:any) => state.auth.isAuth)
 
-    const onChange = (e:any): void => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
     const navigate = useNavigate()
 
-    const onSubmit = async (e:any) => {
+    const onSubmit = async (e:React.FormEvent) => {
         e.preventDefault()
         sendResetEmail(form)
             .then(res => {

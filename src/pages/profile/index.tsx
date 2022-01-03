@@ -17,21 +17,21 @@ const Profile = () => {
 
     const dispatch = useDispatch()
 
-    const onChange = (e:any): void => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form,[e.target.name]: e.target.value})
     }
 
-    const onSubmit = (e:any): void => {
+    const onSubmit = (e:React.FormEvent): void => {
         e.preventDefault()
         dispatch(updateProfile(form))
     }
 
-    const logOutHandler = (e:any): void => {
+    const logOutHandler = (e:React.MouseEvent): void => {
         e.preventDefault()
-        dispatch(logout({token: localStorage.getItem('refreshToken')}))
+        dispatch(logout({token: localStorage.getItem('refreshToken') ?? ''}))
     }
 
-    const onCancelClick = () : void=> {
+    const onCancelClick = () : void => {
         setForm({
             name: profile.profile.name,
             email: profile.profile.email,
@@ -43,8 +43,8 @@ const Profile = () => {
         if(!profile.profileRequest && profile.profile){
             setForm({
                 ...form,
-                name: profile.profile.name,
-                email: profile.profile.email,
+                name: profile.profile.name ?? '',
+                email: profile.profile.email ?? '',
             })
         }
     }, [profile])

@@ -35,7 +35,6 @@ function AppRoutes () {
 
     return (
         <>
-            { /*@ts-ignore*/}
             <Routes location={background ?? location}>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>

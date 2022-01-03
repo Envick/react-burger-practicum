@@ -20,11 +20,11 @@ function Login() {
     })
 
 
-    const onChange = (e:any): void => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form,[e.target.name]: e.target.value})
     }
 
-    const onSubmit = (e:any): void => {
+    const onSubmit = (e:React.FormEvent): void => {
         e.preventDefault()
         dispatch(login(form))
     }

@@ -5,7 +5,7 @@ import {
     REGISTER_REQUEST_FAILED,
     REGISTER_REQUEST_SUCCESS
 } from "../actions/auth";
-import {getCookie, setCookie} from "../../utils/constants";
+import {getCookie, setCookie} from "../../utils/utils";
 import {LOGIN_REQUEST, LOGIN_REQUEST_FAILED, LOGIN_REQUEST_SUCCESS} from "../actions/auth";
 
 const initialState = {

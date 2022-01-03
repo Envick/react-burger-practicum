@@ -10,11 +10,11 @@ interface IModalProps {
     headerText?: string,
     toggleModal: () => void
 }
+const root: HTMLElement | null = document.querySelector('#modals')
 
 const Modal: FC<IModalProps> = ({isOpen, headerText, toggleModal, children}) => {
-    const root: HTMLElement | null = document.querySelector('#modals')
-    const escClickHandler = useCallback((e) => {
-        if(e.keyCode === 27 && isOpen){
+    const escClickHandler = useCallback((e: KeyboardEvent) => {
+        if(e.key === 'Escape' && isOpen){
             toggleModal()
         }
         else{
@@ -45,8 +45,7 @@ const Modal: FC<IModalProps> = ({isOpen, headerText, toggleModal, children}) => 
             <ModalOverlay toggleModal={toggleModal} isOpen={isOpen}/>
         </>
     )
-    //@ts-ignore
-    return ReactDOM.createPortal(modal, root)
+    return root && ReactDOM.createPortal(modal, root)
 }
 
 export default Modal;

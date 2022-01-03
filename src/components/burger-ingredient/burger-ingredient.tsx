@@ -23,7 +23,7 @@ const BurgerIngredient: FC<TBurgerIngredientProps> = ({item, ingredientClickHand
         if(item.type === 'bun'){
             return constructorIngredientsState.bun?._id === item['_id'] ? 1 : 0
         }else{
-            return constructorIngredientsState.ingredients.filter((el:any) => el['_id'] === item['_id']).length
+            return constructorIngredientsState.ingredients.filter((el:TIngredient) => el['_id'] === item['_id']).length
         }
     }, [constructorIngredientsState.bun, constructorIngredientsState.ingredients])
 
