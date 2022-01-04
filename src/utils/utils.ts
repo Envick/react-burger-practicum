@@ -64,8 +64,7 @@ export const retriableFetch = async <ReturnType>(url:string, options: RequestIni
                     options.headers = {};
                 }
 
-                options.headers.authorization = getCookie('refreshToken');// если в переданных опциях не было хедеров, добавляем в options пустой объект по ключу headers
-
+                (options.headers as Record<string, string>).authorization = getCookie('refreshToken') || '';
                 const res = await fetch(url, options); // повторяем оригинальный запрос с оригинальными options (+ дополнительным хедером)
                 return await checkResponse(res); // если все равно проваливаемся -- значит не судьба :/
             }
