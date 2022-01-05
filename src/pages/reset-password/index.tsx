@@ -2,18 +2,19 @@ import React, {useState} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './reset-password.module.css'
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
-import {sendResetPasword} from "../../utils/constants";
+import {sendResetPasword} from "../../utils/utils";
 import {useSelector} from "react-redux";
 
 
 function ResetPassword() {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{password: string, token: string}>({
         password: '',
         token: '',
     })
-    const isAuth = useSelector((state:any) => state.auth.isAuth)
 
-    const onChange = (e:any) => {
+    const isAuth: boolean = useSelector((state:any) => state.auth.isAuth)
+
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
@@ -21,7 +22,7 @@ function ResetPassword() {
 
     const navigate = useNavigate()
 
-    const onSubmit = async (e:any) => {
+    const onSubmit = async (e:React.FormEvent) => {
         e.preventDefault()
         sendResetPasword(form)
             .then(res => {

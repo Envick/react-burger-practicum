@@ -8,20 +8,22 @@ import {register} from "../../services/actions/auth";
 
 function Register() {
     const dispatch = useDispatch()
-    const isAuth = useSelector((store: any) => store.auth.isAuth)
+
+    const isAuth: boolean = useSelector((store: any) => store.auth.isAuth)
 
     const state = useLocation().state;
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{name: string, email:string, password: string}>({
         email: '',
         password: '',
         name: ''
     })
-    const onChange = (e:any) => {
+
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
-    const onSubmit = (e:any) => {
+    const onSubmit = (e:React.FormEvent): void => {
         e.preventDefault()
         dispatch(register(form))
     }

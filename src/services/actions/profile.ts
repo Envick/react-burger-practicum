@@ -1,4 +1,5 @@
-import {getCookie, PROFILE_URL, retriableFetch} from "../../utils/constants";
+import {getCookie,retriableFetch} from "../../utils/utils";
+import {ROOT_URL} from "../../utils/constants";
 
 export const UPDATE_PROFILE_REQUEST = 'UPDATE_PROFILE_OPTIONS_REQUEST'
 export const UPDATE_PROFILE_REQUEST_SUCCESS = 'UPDATE_PROFILE_OPTIONS_REQUEST_SUCCESS'
@@ -12,7 +13,7 @@ export function getProfile(){
     return function(dispatch:any){
         dispatch({type: GET_PROFILE_REQUEST})
 
-        retriableFetch(PROFILE_URL, {
+        retriableFetch(`${ROOT_URL}/auth/user`, {
             headers: {
                 authorization: `Bearer ${getCookie('accessToken')}`
             }
@@ -40,7 +41,7 @@ export function getProfile(){
 export function updateProfile(form:any){
     return function(dispatch:any){
         dispatch({type: UPDATE_PROFILE_REQUEST})
-        retriableFetch(PROFILE_URL, {
+        retriableFetch(`${ROOT_URL}/auth/user`, {
             method: "PATCH",
             body: JSON.stringify(form),
             headers: {

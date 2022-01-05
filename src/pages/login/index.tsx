@@ -10,26 +10,27 @@ function Login() {
 
     const dispatch = useDispatch()
 
-    const isAuth = useSelector((store: any) => store.auth.isAuth)
+    const isAuth: boolean = useSelector((store: any) => store.auth.isAuth)
 
     const state = useLocation().state;
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{email: string, password: string}>({
         email: '',
         password: ''
     })
 
 
-    const onChange = (e:any) => {
+    const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form,[e.target.name]: e.target.value})
     }
 
-    const onSubmit = (e:any) => {
+    const onSubmit = (e:React.FormEvent): void => {
         e.preventDefault()
         dispatch(login(form))
     }
 
     if(isAuth) return  <Navigate to={ state?.from || '/' }/>
+
     return (
         <div className="container">
             <form className={`${styles.form} main-form`} onSubmit={onSubmit}>

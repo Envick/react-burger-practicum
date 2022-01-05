@@ -1,5 +1,4 @@
-// @ts-ignore
-import {LOGIN_URL, LOGOUT_URL, REGISTER_URL} from "../../utils/constants";
+import { ROOT_URL} from "../../utils/constants";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_REQUEST_SUCCESS = 'REGISTER_REQUEST_SUCCESS'
@@ -13,11 +12,11 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
 export const LOGOUT_REQUEST_SUCCESS = 'LOGOUT_REQUEST_SUCCESS'
 export const LOGOUT_REQUEST_FAILED = 'LOGOUT_REQUEST_FAILED'
 
-export function logout(form:any){
+export function logout(form:{token: string}){
     return function(dispatch:any){
         dispatch({type: LOGOUT_REQUEST})
 
-        fetch(LOGOUT_URL, {
+        fetch(`${ROOT_URL}/auth/logout`, {
             method: 'POST',
             body: JSON.stringify(form),
             headers: {
@@ -52,7 +51,7 @@ export function login(form:any){
     return function(dispatch:any){
         dispatch({type: LOGIN_REQUEST})
 
-        fetch(LOGIN_URL, {
+        fetch(`${ROOT_URL}/auth/login`, {
             method: 'POST',
             body: JSON.stringify(form),
             headers: {
@@ -88,7 +87,7 @@ export function register(form:any){
     return function(dispatch:any){
         dispatch({type: REGISTER_REQUEST})
 
-        fetch(REGISTER_URL, {
+        fetch(`${ROOT_URL}/auth/register`, {
             method: 'POST',
             body: JSON.stringify(form),
             headers: {

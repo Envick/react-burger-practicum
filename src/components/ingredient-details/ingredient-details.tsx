@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "./ingredient-details.module.css"
-import {menuItemPropTypes} from "../../utils/constants";
+import {TIngredient} from "../../utils/constants";
 
-//@ts-ignore
-function IngredientDetails({ingredient}) {
+interface IIngredientDetails {
+    ingredient: TIngredient
+}
+
+const IngredientDetails: FC<IIngredientDetails> = ({ingredient}) => {
     return (
         <div className={styles.ingredientsModalBody}>
              <div className="mb-4">
@@ -30,10 +33,6 @@ function IngredientDetails({ingredient}) {
             </div>
         </div>
     );
-}
-
-IngredientDetails.propTypes = {
-    ingredient: menuItemPropTypes.isRequired
 }
 
 export default IngredientDetails;

@@ -2,7 +2,7 @@ import React from 'react';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './app-header.module.css'
 import {Link} from "react-router-dom";
-//@ts-ignore
+
 function AppHeader() {
     return (
         <header className={`pb-4 pt-4 ${styles.mainHeader}`}>

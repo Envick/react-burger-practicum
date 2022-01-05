@@ -1,4 +1,4 @@
-import {GET_INGREDIENTS_URL} from "../../utils/constants";
+import {ROOT_URL} from "../../utils/constants";
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
@@ -9,7 +9,7 @@ export function getIngredients(){
     return function(dispatch:any){
         dispatch({type: GET_INGREDIENTS})
 
-        fetch(GET_INGREDIENTS_URL)
+        fetch(`${ROOT_URL}/ingredients`)
             .then(res => {
                 if(res.ok){
                     return res.json()

@@ -1,14 +1,15 @@
-import {TAKE_ORDER_URL} from "../../utils/constants";
+import {ROOT_URL} from "../../utils/constants";
+import {CLEAR_CONSTRUCTOR} from "./constructor-ingredients";
 
 export const TAKE_ORDER = 'TAKE_ORDER'
 export const ORDER_FAILED = 'ORDER_FAILED'
 export const ORDER_SUCCESS = 'ORDER_SUCCESS'
 
-export function takeOrder(burgerOrder:any, toggleModal:any){
+export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() => void){
     return function(dispatch:any){
         dispatch({type: TAKE_ORDER})
 
-        fetch(TAKE_ORDER_URL, {
+        fetch(`${ROOT_URL}/orders`, {
             method: 'POST',
             body: JSON.stringify(burgerOrder),
             headers: {
@@ -26,6 +27,7 @@ export function takeOrder(burgerOrder:any, toggleModal:any){
                         type: ORDER_SUCCESS,
                         payload: res
                     })
+                    dispatch({type: CLEAR_CONSTRUCTOR})
                     toggleModal()
                 }
                 else{
