@@ -12,7 +12,8 @@ import PageNotFound from "../../pages/page-not-found";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import ModalIngredient from "../modal-ingredient/modal-ingredient";
 import {getIngredients} from "../../services/actions/ingredients";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../utils/hooks";
+import ProfileOrders from "../../pages/profile-orders";
 
 function App() {
     const dispatch = useDispatch()
@@ -43,6 +44,7 @@ function AppRoutes () {
                 <Route path="/reset-password" element={<ResetPassword/>}/>
                 <Route  path='/profile' element={<ProtectedRoute/>}>
                     <Route  path='/profile' element={<Profile/>}/>
+                    <Route  path='/profile/orders' element={<ProfileOrders/>}/>
                 </Route>
                 <Route path="/ingredients/:id" element={<Ingredient/>}/>
                 <Route element={<PageNotFound/>}/>

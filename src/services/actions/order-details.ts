@@ -1,12 +1,26 @@
-import {ROOT_URL} from "../../utils/constants";
+import {ROOT_URL, TAppDispatch, TOrder} from "../../utils/constants";
 import {CLEAR_CONSTRUCTOR} from "./constructor-ingredients";
+import {TAppThunk} from "../../utils/hooks";
 
 export const TAKE_ORDER = 'TAKE_ORDER'
 export const ORDER_FAILED = 'ORDER_FAILED'
 export const ORDER_SUCCESS = 'ORDER_SUCCESS'
 
-export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() => void){
-    return function(dispatch:any){
+export interface ITAKE_ORDER {
+    readonly type: typeof TAKE_ORDER
+}
+export interface IORDER_FAILED {
+    readonly type: typeof ORDER_FAILED
+}
+export interface IORDER_SUCCESS {
+    readonly type: typeof ORDER_SUCCESS
+    payload: TOrder
+}
+
+export type TOrderActions = ITAKE_ORDER | IORDER_FAILED | IORDER_SUCCESS
+
+export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() => void): TAppThunk{
+    return function(dispatch:TAppDispatch){
         dispatch({type: TAKE_ORDER})
 
         fetch(`${ROOT_URL}/orders`, {

@@ -1,7 +1,10 @@
+import {store} from "../index";
+import {TAppActions, TAppThunk} from "./hooks";
+
 export const ROOT_URL = 'https://norma.nomoreparties.space/api';
 export type TIngredient = {
     _id: string,
-    key: string,
+    key?: number,
     name: string,
     type: string,
     proteins: number,
@@ -23,3 +26,30 @@ export type TClientRect = {
     width: number,
     height: number
 }
+
+export type TUser = {
+    name: string,
+    email: string,
+}
+
+export type TOrder = {
+    name: string,
+    order: {
+        number: number
+    },
+    success: boolean
+}
+
+export type TFeed = {
+    ingredients: string[],
+    "_id": string,
+    status: string,
+    name: string,
+    number: number,
+    createdAt: string,
+    updatedAt: string
+}
+
+export type TRootState = ReturnType<typeof store.getState>
+
+export type TAppDispatch = <TReturnType>(action: TAppActions | TAppThunk) => TReturnType;

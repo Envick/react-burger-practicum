@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import {useNavigate} from "react-router-dom";

@@ -3,7 +3,7 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './forgot-password.module.css'
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {sendResetEmail} from "../../utils/utils";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 
 
 function ForgotPassword() {

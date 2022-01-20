@@ -1,7 +1,7 @@
 import React from 'react';
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import {useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 import {TIngredient} from "../../utils/constants";
 
 function Ingredient() {

@@ -1,5 +1,5 @@
 import {Navigate, useLocation, Outlet } from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 
 export function ProtectedRoute() {
 

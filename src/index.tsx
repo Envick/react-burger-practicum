@@ -8,6 +8,14 @@ import { createStore,compose,applyMiddleware } from 'redux';
 import {rootReducer}  from './services/reducers';
 import { Provider } from 'react-redux';
 import thunk from "redux-thunk";
+import {
+    WS_ORDERS_CONNECTION_CLOSED, WS_ORDERS_CONNECTION_ERROR,
+    WS_ORDERS_CONNECTION_START,
+    WS_ORDERS_CONNECTION_SUCCESS, WS_ORDERS_GET_MESSAGE,
+    WS_ORDERS_SEND_MESSAGE
+} from "./services/actions/profile-orders";
+import {socketMiddleware} from "./services/middlewars/socket-middleware";
+import {ROOT_URL} from "./utils/constants";
 //@ts-ignore
 const composeEnhancers =
     //@ts-ignore
@@ -16,9 +24,18 @@ const composeEnhancers =
         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
         : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+export const wsOrdersActions = {
+    wsInit: WS_ORDERS_CONNECTION_START,
+    wsSendMessage: WS_ORDERS_SEND_MESSAGE,
+    onOpen: WS_ORDERS_CONNECTION_SUCCESS,
+    onClose: WS_ORDERS_CONNECTION_CLOSED,
+    onError: WS_ORDERS_CONNECTION_ERROR,
+    onMessage: WS_ORDERS_GET_MESSAGE
+};
 
-const store = createStore(rootReducer, enhancer);
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(`${ROOT_URL}/orders`, wsOrdersActions)));
+
+export const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,15 +2,21 @@ import {
     ADD_CONSTRUCTOR_BUN,
     REPLACE_CONSTRUCTOR_BUN,
     ADD_CONSTRUCTOR_INGREDIENT, CHANGE_CONSTRUCTOR_INGREDIENT_POSITION,
-    REMOVE_CONSTRUCTOR_INGREDIENT, CLEAR_CONSTRUCTOR
+    REMOVE_CONSTRUCTOR_INGREDIENT, CLEAR_CONSTRUCTOR, TConstructorIngredientsActions
 } from "../actions/constructor-ingredients";
+import {TIngredient} from "../../utils/constants";
 
-const initialState = {
+type TIngredientsState = {
+    ingredients: Array<TIngredient>,
+    bun: TIngredient | null
+}
+
+const initialState: TIngredientsState = {
     ingredients: [],
     bun: null
 }
 
-export const constructorReducer = (state = initialState, action: any) => {
+export const constructorReducer = (state = initialState, action: TConstructorIngredientsActions): TIngredientsState => {
     switch(action.type){
         case ADD_CONSTRUCTOR_INGREDIENT:{
             const item = {...action.payload, key:Math.floor(Math.random()*10000)}

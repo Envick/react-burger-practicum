@@ -3,7 +3,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {TIngredient} from "../../utils/constants";
 import {useDrag} from "react-dnd";
 import styles from './burger-ingredients.module.css'
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 
 interface TBurgerIngredientProps {
     item: TIngredient,
