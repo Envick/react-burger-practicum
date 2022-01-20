@@ -14,6 +14,7 @@ import ModalIngredient from "../modal-ingredient/modal-ingredient";
 import {getIngredients} from "../../services/actions/ingredients";
 import {useDispatch} from "../../utils/hooks";
 import ProfileOrders from "../../pages/profile-orders";
+import Feed from "../../pages/feed";
 
 function App() {
     const dispatch = useDispatch()
@@ -42,6 +43,7 @@ function AppRoutes () {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
+                <Route path="/feed" element={<Feed/>}/>
                 <Route  path='/profile' element={<ProtectedRoute/>}>
                     <Route  path='/profile' element={<Profile/>}/>
                     <Route  path='/profile/orders' element={<ProfileOrders/>}/>

@@ -1,5 +1,6 @@
 import {store} from "../index";
 import {TAppActions, TAppThunk} from "./hooks";
+import {ThunkDispatch} from "redux-thunk";
 
 export const ROOT_URL = 'https://norma.nomoreparties.space/api';
 export type TIngredient = {
@@ -52,4 +53,4 @@ export type TFeed = {
 
 export type TRootState = ReturnType<typeof store.getState>
 
-export type TAppDispatch = <TReturnType>(action: TAppActions | TAppThunk) => TReturnType;
+export type TAppDispatch = ThunkDispatch<TRootState , unknown, TAppActions>

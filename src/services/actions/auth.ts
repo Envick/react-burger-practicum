@@ -1,5 +1,4 @@
 import {ROOT_URL, TAppDispatch, TUser} from "../../utils/constants";
-import {TAppThunk} from "../../utils/hooks";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_REQUEST_SUCCESS = 'REGISTER_REQUEST_SUCCESS'
@@ -63,8 +62,8 @@ export type TAuthActions =
     IREGISTER_REQUEST_SUCCESS
 
 
-export function logout(form:{token: string}): TAppThunk{
-    return function(dispatch: ){
+export function logout(form:{token: string}){
+    return function(dispatch: TAppDispatch){
         dispatch({type: LOGOUT_REQUEST})
         fetch(`${ROOT_URL}/auth/logout`, {
             method: 'POST',
@@ -97,7 +96,7 @@ export function logout(form:{token: string}): TAppThunk{
             })
     }
 }
-export function login(form:{email: string, password: string}): TAppThunk{
+export function login(form:{email: string, password: string}){
     return function(dispatch:TAppDispatch){
         dispatch({type: LOGIN_REQUEST})
 
@@ -133,7 +132,7 @@ export function login(form:{email: string, password: string}): TAppThunk{
             })
     }
 }
-export function register(form:{email: string, name: string, password: string}): TAppThunk{
+export function register(form:{email: string, name: string, password: string}){
     return function(dispatch:TAppDispatch){
         dispatch({type: REGISTER_REQUEST})
 

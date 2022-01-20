@@ -19,7 +19,7 @@ export interface IORDER_SUCCESS {
 
 export type TOrderActions = ITAKE_ORDER | IORDER_FAILED | IORDER_SUCCESS
 
-export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() => void): TAppThunk{
+export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() => void){
     return function(dispatch:TAppDispatch){
         dispatch({type: TAKE_ORDER})
 

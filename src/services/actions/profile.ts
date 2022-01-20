@@ -40,7 +40,7 @@ export type TProfileActions =
     IGET_PROFILE_REQUEST_SUCCESS
 
 
-export function getProfile(): TAppThunk{
+export function getProfile(){
     return function(dispatch:TAppDispatch){
         dispatch({type: GET_PROFILE_REQUEST})
 
@@ -69,7 +69,7 @@ export function getProfile(): TAppThunk{
             })
     }
 }
-export function updateProfile(form: {name: string, email: string, password: string }): TAppThunk{
+export function updateProfile(form: {name: string, email: string, password: string }){
     return function(dispatch:TAppDispatch){
         dispatch({type: UPDATE_PROFILE_REQUEST})
         retriableFetch(`${ROOT_URL}/auth/user`, {

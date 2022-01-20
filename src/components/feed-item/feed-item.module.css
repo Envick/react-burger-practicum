@@ -11,3 +11,31 @@
     justify-content: space-between;
     margin-bottom: 24px;
 }
+.ingredients{
+    display: flex;
+}
+.feedImageContainer{
+    width: 64px;
+    height: 64px;
+    background: #131316;
+    border-radius: 100px;
+    border: 2px solid #801AB3
+}
+.feedImage{
+    height: 100%;
+    display: block;
+    margin-left: -30px;
+}
+.feedMoreContainer{
+    position: relative;
+}
+.feedMoreContainer .feedImageContainer{
+    opacity: 0.6;
+}
+.count{
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

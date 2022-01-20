@@ -13,6 +13,10 @@ export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
             if (type === wsInit && accessToken) {
                 socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
             }
+            else if(type === wsInit){
+                socket = new WebSocket(wsUrl);
+
+            }
             if (socket) {
                 socket.onopen = event => {
                     dispatch({ type: onOpen, payload: event });

@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useMemo} from 'react';
 import styles from './profile-orders.module.css'
 import {NavLink} from "react-router-dom";
 import {logout} from "../../services/actions/auth";
@@ -15,6 +15,10 @@ const ProfileOrders: FC<any> = () => {
     }
 
     const orders = useSelector(store => store.profileOrders.orders)
+
+    useMemo(() => {
+        console.log(orders)
+    }, [orders])
 
     useEffect(() => {
         dispatch({type: WS_ORDERS_CONNECTION_START})
@@ -36,7 +40,7 @@ const ProfileOrders: FC<any> = () => {
                    </div>
                    <div className={styles.orders}>
                        {orders.map(item => (
-                           <FeedItem {...item} />
+                           <FeedItem isShowStatus={true} {...item} />
                        ))}
                    </div>
                </div>

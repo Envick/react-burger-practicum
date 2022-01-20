@@ -19,7 +19,7 @@ export interface IGET_INGREDIENTS_SUCCESS {
 export type TIngredientActions = IGET_INGREDIENTS | IGET_INGREDIENTS_SUCCESS | IGET_INGREDIENTS_FAILED
 
 
-export function getIngredients(): TAppThunk{
+export function getIngredients(){
     return function(dispatch:TAppDispatch){
         dispatch({type: GET_INGREDIENTS})
 

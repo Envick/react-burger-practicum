@@ -1,0 +1,23 @@
+.feedContent{
+    display: flex;
+}
+.feedInfo{
+    padding-left: 56px;
+    width: 50%;
+}
+.orders{
+    width: 50%;
+}
+.feedReadiness{
+    display: flex;
+}
+.feedReady{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+.feedPending{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}

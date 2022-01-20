@@ -1,45 +1,46 @@
 import {TFeed} from "../../utils/constants";
 import {
-    TProfileOrdersActions, WS_ORDERS_CONNECTION_CLOSED,
-    WS_ORDERS_CONNECTION_ERROR,
-    WS_ORDERS_CONNECTION_SUCCESS, WS_ORDERS_GET_MESSAGE
-} from "../actions/profile-orders";
+     WS_FEED_CONNECTION_CLOSED,
+    WS_FEED_CONNECTION_ERROR,
+    WS_FEED_CONNECTION_SUCCESS, WS_FEED_GET_MESSAGE
+} from "../actions/feed";
+import {TFeedActions} from "../actions/feed";
 
-type TProfileOrdersState = {
+type TFeedState = {
     wsOrdersConnected: boolean,
     orders: TFeed[],
     totalSum: number,
     totalTodaySum: number
 }
 
-const initialState: TProfileOrdersState = {
+const initialState: TFeedState = {
     wsOrdersConnected: false,
     orders: [],
     totalSum: 0,
     totalTodaySum: 0,
 }
 
-export const profileOrdersReducer = (state= initialState, action:TProfileOrdersActions): TProfileOrdersState => {
+export const feedReducer = (state= initialState, action:TFeedActions): TFeedState => {
     switch (action.type) {
-        case WS_ORDERS_CONNECTION_SUCCESS:
+        case WS_FEED_CONNECTION_SUCCESS:
             return {
                 ...state,
                 wsOrdersConnected: true
             };
 
-        case WS_ORDERS_CONNECTION_ERROR:
+        case WS_FEED_CONNECTION_ERROR:
             return {
                 ...state,
                 wsOrdersConnected: false
             };
 
-        case WS_ORDERS_CONNECTION_CLOSED:
+        case WS_FEED_CONNECTION_CLOSED:
             return {
                 ...state,
                 wsOrdersConnected: false
             };
 
-        case WS_ORDERS_GET_MESSAGE:
+        case WS_FEED_GET_MESSAGE:
             return {
                 ...state,
                 orders: action.payload.orders,

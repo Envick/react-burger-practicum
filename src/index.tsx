@@ -15,8 +15,13 @@ import {
     WS_ORDERS_SEND_MESSAGE
 } from "./services/actions/profile-orders";
 import {socketMiddleware} from "./services/middlewars/socket-middleware";
-import {ROOT_URL} from "./utils/constants";
-//@ts-ignore
+import {
+    WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_ERROR,
+    WS_FEED_CONNECTION_START,
+    WS_FEED_CONNECTION_SUCCESS, WS_FEED_GET_MESSAGE,
+    WS_FEED_SEND_MESSAGE
+} from "./services/actions/feed";
+
 const composeEnhancers =
     //@ts-ignore
     typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -33,7 +38,21 @@ export const wsOrdersActions = {
     onMessage: WS_ORDERS_GET_MESSAGE
 };
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(`${ROOT_URL}/orders`, wsOrdersActions)));
+export const wsFeedActions = {
+    wsInit: WS_FEED_CONNECTION_START,
+    wsSendMessage: WS_FEED_SEND_MESSAGE,
+    onOpen: WS_FEED_CONNECTION_SUCCESS,
+    onClose: WS_FEED_CONNECTION_CLOSED,
+    onError: WS_FEED_CONNECTION_ERROR,
+    onMessage: WS_FEED_GET_MESSAGE
+};
+
+const enhancer = composeEnhancers(applyMiddleware(
+    thunk,
+    socketMiddleware('wss://norma.nomoreparties.space/orders/all', wsFeedActions),
+    socketMiddleware('wss://norma.nomoreparties.space/orders', wsOrdersActions),
+    )
+);
 
 export const store = createStore(rootReducer, enhancer);
 
