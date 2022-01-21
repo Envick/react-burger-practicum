@@ -1,13 +1,16 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import styles from "./feed-item.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useParams} from "react-router-dom";
-import {useSelector} from "../../utils/hooks";
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {TFeed, TIngredient} from "../../utils/constants";
+import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
 
 const FeedItem = () => {
 
     const {id} = useParams()
+
+    const dispatch = useDispatch()
 
     const allIngredients = useSelector((state) => state.ingredients.ingredients)
 
@@ -25,6 +28,9 @@ const FeedItem = () => {
         return feedIngredients.reduce((acc, item) => acc += item.price, 0)
     }, [feedIngredients])
 
+    useEffect(() => {
+        dispatch({type: WS_FEED_CONNECTION_START})
+    }, [])
 
     return activeFeed ? (
         <main>

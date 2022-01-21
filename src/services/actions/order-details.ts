@@ -1,6 +1,7 @@
 import {ROOT_URL, TAppDispatch, TOrder} from "../../utils/constants";
 import {CLEAR_CONSTRUCTOR} from "./constructor-ingredients";
 import {TAppThunk} from "../../utils/hooks";
+import {getCookie} from "../../utils/utils";
 
 export const TAKE_ORDER = 'TAKE_ORDER'
 export const ORDER_FAILED = 'ORDER_FAILED'
@@ -27,7 +28,8 @@ export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() =
             method: 'POST',
             body: JSON.stringify(burgerOrder),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + getCookie('accessToken')
             },
         })
             .then(res => {

@@ -1,16 +1,15 @@
-import React, {FC, useEffect, useMemo} from 'react';
+import React, {FC, useEffect} from 'react';
 import styles from './feed.module.css'
 import {useDispatch, useSelector} from "../../utils/hooks";
 import FeedItem from "../../components/feed-item";
-import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
-import {TFeed, TIngredient} from "../../utils/constants";
-import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
 import {useNavigate} from "react-router-dom";
+import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
+
 const Feed: FC<any> = () => {
 
-    const dispatch = useDispatch()
-
     const navigate = useNavigate()
+
+    const dispatch = useDispatch()
 
     const {orders, totalSum, totalTodaySum} = useSelector(store => store.feed)
 
@@ -18,10 +17,9 @@ const Feed: FC<any> = () => {
         navigate(`/feed/${id}`, {state: {feedBackground: '/feed'}})
     }
 
-    useMemo(() => {
-        console.log(orders)
-    }, [orders])
-
+    useEffect(() => {
+        dispatch({type: WS_FEED_CONNECTION_START})
+    }, [])
 
     return (
         <main>
@@ -30,7 +28,7 @@ const Feed: FC<any> = () => {
                <div className={styles.feedContent}>
                    <div className={styles.orders}>
                        {orders.map(item => (
-                           <FeedItem onClick={feedClickHandler} isShowStatus={false} {...item} />
+                           <FeedItem key={item._id} onClick={feedClickHandler} isShowStatus={false} {...item} />
                        ))}
                    </div>
                    <div className={styles.feedInfo}>

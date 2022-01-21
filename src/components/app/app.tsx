@@ -17,13 +17,12 @@ import ProfileOrders from "../../pages/profile-orders";
 import Feed from "../../pages/feed";
 import FeedItem from "../../pages/feed-item";
 import ModalFeed from "../modal-feed";
-import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
+import ProfileOrdersItem from "../../pages/profile-orders-item";
 
 function App() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getIngredients())
-        dispatch({type: WS_FEED_CONNECTION_START})
     }, [dispatch])
     return (
         <div className="app">
@@ -52,6 +51,7 @@ function AppRoutes () {
                 <Route  path='/profile' element={<ProtectedRoute/>}>
                     <Route  path='/profile' element={<Profile/>}/>
                     <Route  path='/profile/orders' element={<ProfileOrders/>}/>
+                    <Route  path='/profile/orders/:id' element={<ProfileOrdersItem/>}/>
                 </Route>
                 <Route path="/ingredients/:id" element={<Ingredient/>}/>
                 <Route element={<PageNotFound/>}/>
@@ -60,7 +60,8 @@ function AppRoutes () {
                 {background && <Route path="/ingredients/:id" element={<ModalIngredient isOpen={Boolean(background)}/>}/>}
             </Routes>
             <Routes>
-                {feedBackground && <Route path="/feed/:id" element={<ModalFeed isOpen={Boolean(feedBackground)}/>}/>}
+                {feedBackground && <Route path="/feed/:id" element={<ModalFeed redirect={"/feed"} isOpen={Boolean(feedBackground)}/>}/>}
+                {feedBackground && <Route path="/profile/orders/:id" element={<ModalFeed redirect={"/profile/orders"} isOpen={Boolean(feedBackground)}/>}/>}
             </Routes>
         </>
     )

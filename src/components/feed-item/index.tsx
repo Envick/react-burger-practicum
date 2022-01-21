@@ -55,7 +55,7 @@ const FeedItem: FC<TFeed & { isShowStatus: boolean, onClick: (...args: any[]) =>
             <div className={styles.main}>
                 <h3 className="text text_type_main-medium mb-6">{name}</h3>
                 {isShowStatus && (
-                    <span className="text text_type_main-small">
+                    <span className="text text_type_main-small mb-6" style={{display: "block"}}>
                         {
                             status === 'created' ? 'Создан' :
                                 status === 'done' ? 'Выполнен' :

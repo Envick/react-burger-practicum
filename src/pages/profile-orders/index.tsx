@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useMemo} from 'react';
 import styles from './profile-orders.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {logout} from "../../services/actions/auth";
 import {useDispatch, useSelector} from "../../utils/hooks";
 import FeedItem from "../../components/feed-item";
@@ -14,11 +14,14 @@ const ProfileOrders: FC<any> = () => {
         dispatch(logout({token: localStorage.getItem('refreshToken') ?? ''}))
     }
 
+    const navigate = useNavigate()
+
     const orders = useSelector(store => store.profileOrders.orders)
 
-    useMemo(() => {
-        console.log(orders)
-    }, [orders])
+    function feedClickHandler(id: string){
+        navigate(`/profile/orders/${id}`, {state: {feedBackground: '/profile/orders'}})
+    }
+
 
     useEffect(() => {
         dispatch({type: WS_ORDERS_CONNECTION_START})
@@ -40,7 +43,7 @@ const ProfileOrders: FC<any> = () => {
                    </div>
                    <div className={styles.orders}>
                        {orders.map(item => (
-                           <FeedItem onClick={() => null} isShowStatus={true} {...item} />
+                           <FeedItem key={item._id} onClick={feedClickHandler} isShowStatus={true} {...item} />
                        ))}
                    </div>
                </div>
