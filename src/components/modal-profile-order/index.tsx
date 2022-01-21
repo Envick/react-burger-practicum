@@ -3,14 +3,14 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "../../utils/hooks";
 import {TFeed, TIngredient} from "../../utils/constants";
 import Modal from "../modal/modal";
-import styles from './modal-feed.module.css'
+import styles from './modal-profile-order.module.css'
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 interface IModalFeedProps{
     isOpen: boolean,
 }
 
-const ModalFeed: FC<IModalFeedProps> = ({isOpen}) => {
+const ModalProfileOrder: FC<IModalFeedProps> = ({isOpen}) => {
 
     const {id} = useParams()
 
@@ -18,7 +18,7 @@ const ModalFeed: FC<IModalFeedProps> = ({isOpen}) => {
 
     const allIngredients = useSelector((state) => state.ingredients.ingredients)
 
-    const feed = useSelector(state => state.feed.orders)
+    const feed = useSelector(state => state.profileOrders.orders)
 
     const activeFeed = useMemo<TFeed | undefined>(() => {
         return feed.find((item:TFeed) => item._id === id)
@@ -33,12 +33,11 @@ const ModalFeed: FC<IModalFeedProps> = ({isOpen}) => {
     }, [feedIngredients])
 
     function toggleFeedModal(): void{
-        navigate('/feed')
+        navigate('/profile/orders')
     }
 
-    return (
+    return activeFeed ? (
         <Modal isOpen={isOpen} headerSize={'default'} headerText={`#${activeFeed?._id}`} toggleModal={toggleFeedModal}>
-            {activeFeed && (
                 <div>
                     <h3 className={"text text_type_main-medium mb-2"}>{activeFeed.name}</h3>
                     <span style={{display:"block", color: activeFeed.status === 'done' ? '#00CCCC' : 'red'}}
@@ -72,9 +71,8 @@ const ModalFeed: FC<IModalFeedProps> = ({isOpen}) => {
                         </div>
                     </div>
                 </div>
-            )}
         </Modal>
-    );
+    ) : null
 };
 
-export default ModalFeed;
+export default ModalProfileOrder;

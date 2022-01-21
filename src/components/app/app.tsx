@@ -18,6 +18,7 @@ import Feed from "../../pages/feed";
 import FeedItem from "../../pages/feed-item";
 import ModalFeed from "../modal-feed";
 import ProfileOrdersItem from "../../pages/profile-orders-item";
+import ModalProfileOrder from "../modal-profile-order";
 
 function App() {
     const dispatch = useDispatch()
@@ -60,8 +61,8 @@ function AppRoutes () {
                 {background && <Route path="/ingredients/:id" element={<ModalIngredient isOpen={Boolean(background)}/>}/>}
             </Routes>
             <Routes>
-                {feedBackground && <Route path="/feed/:id" element={<ModalFeed redirect={"/feed"} isOpen={Boolean(feedBackground)}/>}/>}
-                {feedBackground && <Route path="/profile/orders/:id" element={<ModalFeed redirect={"/profile/orders"} isOpen={Boolean(feedBackground)}/>}/>}
+                {feedBackground && <Route path="/feed/:id" element={<ModalFeed isOpen={Boolean(feedBackground)}/>}/>}
+                {feedBackground && <Route path="/profile/orders/:id" element={<ModalProfileOrder isOpen={Boolean(feedBackground)}/>}/>}
             </Routes>
         </>
     )
