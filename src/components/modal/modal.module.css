@@ -19,7 +19,7 @@
 .modalClose{
     cursor: pointer;
     position: absolute;
-    top: 60px;
+    top: 36px;
     right: 40px;
 }
 .showModal{

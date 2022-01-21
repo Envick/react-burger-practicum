@@ -15,11 +15,15 @@ import {getIngredients} from "../../services/actions/ingredients";
 import {useDispatch} from "../../utils/hooks";
 import ProfileOrders from "../../pages/profile-orders";
 import Feed from "../../pages/feed";
+import FeedItem from "../../pages/feed-item";
+import ModalFeed from "../modal-feed";
+import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
 
 function App() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getIngredients())
+        dispatch({type: WS_FEED_CONNECTION_START})
     }, [dispatch])
     return (
         <div className="app">
@@ -34,16 +38,17 @@ function App() {
 function AppRoutes () {
     const location = useLocation()
     const background = location.state?.background
-
+    const feedBackground = location.state?.feedBackground
     return (
         <>
-            <Routes location={background ?? location}>
+            <Routes location={background ?? feedBackground ?? location}>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
                 <Route path="/feed" element={<Feed/>}/>
+                <Route path="/feed/:id" element={<FeedItem/>}/>
                 <Route  path='/profile' element={<ProtectedRoute/>}>
                     <Route  path='/profile' element={<Profile/>}/>
                     <Route  path='/profile/orders' element={<ProfileOrders/>}/>
@@ -53,6 +58,9 @@ function AppRoutes () {
             </Routes>
             <Routes>
                 {background && <Route path="/ingredients/:id" element={<ModalIngredient isOpen={Boolean(background)}/>}/>}
+            </Routes>
+            <Routes>
+                {feedBackground && <Route path="/feed/:id" element={<ModalFeed isOpen={Boolean(feedBackground)}/>}/>}
             </Routes>
         </>
     )

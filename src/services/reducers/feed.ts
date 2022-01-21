@@ -1,16 +1,17 @@
 import {TFeed} from "../../utils/constants";
 import {
-     WS_FEED_CONNECTION_CLOSED,
+    TFeedActions,
+    WS_FEED_CONNECTION_CLOSED,
     WS_FEED_CONNECTION_ERROR,
-    WS_FEED_CONNECTION_SUCCESS, WS_FEED_GET_MESSAGE
+    WS_FEED_CONNECTION_SUCCESS,
+    WS_FEED_GET_MESSAGE
 } from "../actions/feed";
-import {TFeedActions} from "../actions/feed";
 
 type TFeedState = {
     wsOrdersConnected: boolean,
     orders: TFeed[],
     totalSum: number,
-    totalTodaySum: number
+    totalTodaySum: number,
 }
 
 const initialState: TFeedState = {

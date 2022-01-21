@@ -3,19 +3,25 @@ import styles from './feed.module.css'
 import {useDispatch, useSelector} from "../../utils/hooks";
 import FeedItem from "../../components/feed-item";
 import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
+import {TFeed, TIngredient} from "../../utils/constants";
+import {SET_ACTIVE_INGREDIENT} from "../../services/actions/ingredient-details";
+import {useNavigate} from "react-router-dom";
 const Feed: FC<any> = () => {
 
     const dispatch = useDispatch()
 
-    const orders = useSelector(store => store.feed.orders)
+    const navigate = useNavigate()
+
+    const {orders, totalSum, totalTodaySum} = useSelector(store => store.feed)
+
+    function feedClickHandler(id: string){
+        navigate(`/feed/${id}`, {state: {feedBackground: '/feed'}})
+    }
 
     useMemo(() => {
         console.log(orders)
     }, [orders])
 
-    useEffect(() => {
-        dispatch({type: WS_FEED_CONNECTION_START})
-    }, [])
 
     return (
         <main>
@@ -24,7 +30,7 @@ const Feed: FC<any> = () => {
                <div className={styles.feedContent}>
                    <div className={styles.orders}>
                        {orders.map(item => (
-                           <FeedItem isShowStatus={false} {...item} />
+                           <FeedItem onClick={feedClickHandler} isShowStatus={false} {...item} />
                        ))}
                    </div>
                    <div className={styles.feedInfo}>
@@ -42,6 +48,10 @@ const Feed: FC<any> = () => {
                                 ))}
                             </div>
                         </div>
+                       <span style={{display: 'block'}} className={"text text_type_main-medium"}>Выполнено за все время:</span>
+                       <span style={{display: 'block'}} className={"text text_type_digits-large mb-15"}>{totalSum}</span>
+                       <span style={{display: 'block'}} className={"text text_type_main-medium"}>Выполнено за сегодня:</span>
+                       <span style={{display: 'block'}} className={"text text_type_digits-large mb-15"}>{totalTodaySum}</span>
                    </div>
                </div>
             </div>

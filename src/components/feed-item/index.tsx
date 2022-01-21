@@ -2,8 +2,11 @@ import React, {FC, useMemo} from 'react';
 import styles from './feed-item.module.css'
 import {useSelector} from "../../utils/hooks";
 import {TFeed, TIngredient} from "../../utils/constants";
+import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-const FeedItem: FC<TFeed & { isShowStatus: boolean }> = ({isShowStatus, _id, name, createdAt, status, ingredients}) => {
+const FeedItem: FC<TFeed & { isShowStatus: boolean, onClick: (...args: any[]) => void }> = (
+        {onClick, isShowStatus, _id, name, createdAt, status, ingredients}
+    ) => {
 
     const allIngredients = useSelector((state) => state.ingredients.ingredients)
 
@@ -39,12 +42,12 @@ const FeedItem: FC<TFeed & { isShowStatus: boolean }> = ({isShowStatus, _id, nam
 
     }
 
-    const calcOrderPrice = () => {
-
-    }
+    const orderPrice = useMemo(() => {
+        return feedIngredients.reduce((acc, item) => acc += item.price, 0)
+    }, [feedIngredients])
 
     return (
-        <div className={styles.feedItem}>
+        <div className={styles.feedItem} onClick={() => onClick(_id)}>
             <div className={styles.header}>
                 <span className="text text_type_main-default">#{_id}</span>
                 <span className="text text_type_main-default text_color_inactive">{new Date(createdAt).toLocaleDateString()}</span>
@@ -65,7 +68,10 @@ const FeedItem: FC<TFeed & { isShowStatus: boolean }> = ({isShowStatus, _id, nam
                 <div className={styles.ingredients}>
                     {renderIngredients()}
                 </div>
-
+                <div className={`${styles.price} mb-1`}>
+                    <span className={`mr-2 text text_type_digits-default`}>{orderPrice}</span>
+                    <CurrencyIcon type="primary" />
+                </div>
             </div>
         </div>
     );

@@ -40,7 +40,7 @@ const ProfileOrders: FC<any> = () => {
                    </div>
                    <div className={styles.orders}>
                        {orders.map(item => (
-                           <FeedItem isShowStatus={true} {...item} />
+                           <FeedItem onClick={() => null} isShowStatus={true} {...item} />
                        ))}
                    </div>
                </div>
