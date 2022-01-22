@@ -9,7 +9,7 @@ import {TUser} from "../../utils/constants";
 type TProfileState = {
     profileRequest: boolean,
     profileFailed: boolean,
-    profile: TUser | {}
+    profile: TUser
 }
 
 const initialState: TProfileState = {

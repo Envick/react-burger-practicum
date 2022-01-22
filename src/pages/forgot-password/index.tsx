@@ -11,7 +11,7 @@ function ForgotPassword() {
         email: '',
     })
 
-    const isAuth: boolean = useSelector((state:any) => state.auth.isAuth)
+    const isAuth: boolean = useSelector((state) => state.auth.isAuth)
 
     const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form, [e.target.name]: e.target.value})

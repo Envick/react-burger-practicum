@@ -17,7 +17,7 @@ const BurgerIngredient: FC<TBurgerIngredientProps> = ({item, ingredientClickHand
         item: item
     })
 
-    const constructorIngredientsState = useSelector((state:any) => state.constructorIngredients)
+    const constructorIngredientsState = useSelector((state) => state.constructorIngredients)
 
     const getIngredientCount = useCallback(() => {
         if(item.type === 'bun'){

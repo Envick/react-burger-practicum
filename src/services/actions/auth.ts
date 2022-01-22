@@ -1,4 +1,5 @@
 import {ROOT_URL, TAppDispatch, TUser} from "../../utils/constants";
+import {checkResponse} from "../../utils/utils";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_REQUEST_SUCCESS = 'REGISTER_REQUEST_SUCCESS'
@@ -72,12 +73,8 @@ export function logout(form:{token: string}){
                 'Content-Type': 'application/json'
             },
         })
-            .then(res => {
-                if(res.ok){
-                    return res.json()
-                }
-            })
-            .then((res: any) => {
+            .then(checkResponse)
+            .then((res) => {
                 if(res || res.success){
                     dispatch({
                         type: LOGOUT_REQUEST_SUCCESS,
@@ -107,12 +104,8 @@ export function login(form:{email: string, password: string}){
                 'Content-Type': 'application/json'
             },
         })
+            .then(checkResponse)
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                }
-            })
-            .then((res: any) => {
                 if(res || res.success){
                     dispatch({
                         type: LOGIN_REQUEST_SUCCESS,
@@ -143,12 +136,8 @@ export function register(form:{email: string, name: string, password: string}){
                 'Content-Type': 'application/json'
             },
         })
+            .then(checkResponse)
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                }
-            })
-            .then((res: any) => {
                 if(res || res.success){
                     dispatch({
                         type: REGISTER_REQUEST_SUCCESS,

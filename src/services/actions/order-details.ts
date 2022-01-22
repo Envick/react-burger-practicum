@@ -1,7 +1,7 @@
 import {ROOT_URL, TAppDispatch, TOrder} from "../../utils/constants";
 import {CLEAR_CONSTRUCTOR} from "./constructor-ingredients";
 import {TAppThunk} from "../../utils/hooks";
-import {getCookie} from "../../utils/utils";
+import {checkResponse, getCookie} from "../../utils/utils";
 
 export const TAKE_ORDER = 'TAKE_ORDER'
 export const ORDER_FAILED = 'ORDER_FAILED'
@@ -32,12 +32,8 @@ export function takeOrder(burgerOrder: {ingredients: string[]}, toggleModal:() =
                 'authorization': 'Bearer ' + getCookie('accessToken')
             },
         })
+            .then(checkResponse)
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                }
-            })
-            .then((res: any) => {
                 if(res && res.success){
                     dispatch({
                         type: ORDER_SUCCESS,

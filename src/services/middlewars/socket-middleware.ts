@@ -1,7 +1,17 @@
-import {Middleware} from "redux";
+import {Middleware, MiddlewareAPI} from "redux";
 import {getCookie} from "../../utils/utils";
+import {TAppDispatch, TRootState} from "../../utils/constants";
 
-export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
+type TwsActions = {
+    wsInit: string,
+    wsSendMessage: string,
+    onOpen: string,
+    onClose: string,
+    onError: string,
+    onMessage: string
+}
+
+export const socketMiddleware = (wsUrl: string, wsActions: TwsActions): Middleware => {
     return (store) => {
         let socket: WebSocket | null = null;
 

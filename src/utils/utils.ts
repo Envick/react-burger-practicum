@@ -30,7 +30,7 @@ export function getCookie(name:string) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-const checkResponse = (res: Response) => {
+export const checkResponse = (res: Response) => {
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 

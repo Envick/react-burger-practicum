@@ -13,9 +13,9 @@ const ModalIngredient: FC<IModalIngredientProps> = ({isOpen}) => {
 
     const {id} = useParams()
 
-    const ingredients = useSelector((state:any) => state.ingredients.ingredients)
+    const ingredients = useSelector((state) => state.ingredients.ingredients)
 
-    const activeIngredient = useMemo<TIngredient>(() => {
+    const activeIngredient = useMemo<TIngredient | undefined>(() => {
         return ingredients.find((item:TIngredient) => item._id === id)
     }, [id,ingredients])
 

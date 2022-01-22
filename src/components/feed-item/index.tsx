@@ -5,7 +5,7 @@ import {TFeed, TIngredient} from "../../utils/constants";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const FeedItem: FC<TFeed & { isShowStatus: boolean, onClick: (...args: any[]) => void }> = (
-        {onClick, isShowStatus, _id, name, createdAt, status, ingredients}
+        {onClick, isShowStatus, _id, number, name, createdAt, status, ingredients}
     ) => {
 
     const allIngredients = useSelector((state) => state.ingredients.ingredients)
@@ -19,7 +19,7 @@ const FeedItem: FC<TFeed & { isShowStatus: boolean, onClick: (...args: any[]) =>
             return  feedIngredients.slice(0, 6).map((item, index: number) => {
                 if(index === 5){
                     return (
-                        <div className={styles.feedMoreContainer}>
+                        <div key={item._id + Math.random() * 1000} className={styles.feedMoreContainer}>
                             <div className={styles.feedImageContainer}>
                                 <img className={styles.feedImage} src={item.image} alt=""/>
                             </div>
@@ -28,14 +28,14 @@ const FeedItem: FC<TFeed & { isShowStatus: boolean, onClick: (...args: any[]) =>
                     )
                 }
                 return (
-                    <div className={styles.feedImageContainer}>
+                    <div key={item._id + Math.random() * 1000} className={styles.feedImageContainer}>
                         <img className={styles.feedImage} src={item.image} alt=""/>
                     </div>
                 )
             })
         }
         return  feedIngredients.map(item => (
-            <div className={styles.feedImageContainer}>
+            <div key={item._id + Math.random() * 1000} className={styles.feedImageContainer}>
                 <img className={styles.feedImage} src={item.image} alt=""/>
             </div>
         ))
@@ -49,7 +49,7 @@ const FeedItem: FC<TFeed & { isShowStatus: boolean, onClick: (...args: any[]) =>
     return (
         <div className={styles.feedItem} onClick={() => onClick(_id)}>
             <div className={styles.header}>
-                <span className="text text_type_main-default">#{_id}</span>
+                <span className="text text_type_main-default">#{number}</span>
                 <span className="text text_type_main-default text_color_inactive">{new Date(createdAt).toLocaleDateString()}</span>
             </div>
             <div className={styles.main}>

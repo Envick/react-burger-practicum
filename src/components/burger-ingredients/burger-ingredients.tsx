@@ -18,7 +18,7 @@ function BurgerIngredients() {
         navigate(`/ingredients/${item._id}`, {state: {background: '/'}})
     }
 
-    const ingredients = useSelector((store:any) => store.ingredients.ingredients)
+    const ingredients = useSelector(store => store.ingredients.ingredients)
     
     const scrollHandler = useCallback(() => {
         let containerTopMargin: number = ingredientsRef?.current?.getBoundingClientRect()?.top ?? 0

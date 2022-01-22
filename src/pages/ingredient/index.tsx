@@ -8,7 +8,7 @@ function Ingredient() {
 
     const {id} = useParams()
 
-    const ingredients: TIngredient[] = useSelector((state:any) => state.ingredients.ingredients)
+    const ingredients: TIngredient[] = useSelector((state) => state.ingredients.ingredients)
     const ingredient: TIngredient | undefined = ingredients.find((item:TIngredient) => item._id === id)
 
     if(!ingredient) return null

@@ -49,24 +49,24 @@ export function getProfile(){
                 authorization: `Bearer ${getCookie('accessToken')}`
             }
         })
-            .then((res: any) => {
-                if(res && res.success){
-                    dispatch({
-                        type: GET_PROFILE_REQUEST_SUCCESS,
-                        payload: res.user
-                    })
-                }
-                else{
-                    dispatch({
-                        type: GET_PROFILE_REQUEST_FAILED
-                    })
-                }
-            })
-            .catch(e => {
+        .then((res: any) => {
+            if(res && res.success){
+                dispatch({
+                    type: GET_PROFILE_REQUEST_SUCCESS,
+                    payload: res.user
+                })
+            }
+            else{
                 dispatch({
                     type: GET_PROFILE_REQUEST_FAILED
                 })
+            }
+        })
+        .catch(e => {
+            dispatch({
+                type: GET_PROFILE_REQUEST_FAILED
             })
+        })
     }
 }
 export function updateProfile(form: {name: string, email: string, password: string }){
@@ -80,23 +80,23 @@ export function updateProfile(form: {name: string, email: string, password: stri
                 authorization: `Bearer ${getCookie('accessToken')}`
             }
         })
-            .then((res: any) => {
-                if(res && res.success){
-                    dispatch({
-                        type: UPDATE_PROFILE_REQUEST_SUCCESS,
-                        payload: res.user
-                    })
-                }
-                else{
-                    dispatch({
-                        type: UPDATE_PROFILE_REQUEST_FAILED
-                    })
-                }
-            })
-            .catch(e => {
+        .then((res: any) => {
+            if(res && res.success){
+                dispatch({
+                    type: UPDATE_PROFILE_REQUEST_SUCCESS,
+                    payload: res.user
+                })
+            }
+            else{
                 dispatch({
                     type: UPDATE_PROFILE_REQUEST_FAILED
                 })
+            }
+        })
+        .catch(e => {
+            dispatch({
+                type: UPDATE_PROFILE_REQUEST_FAILED
             })
+        })
     }
 }

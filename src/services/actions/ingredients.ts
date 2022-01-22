@@ -1,5 +1,6 @@
 import {ROOT_URL, TAppDispatch, TIngredient} from "../../utils/constants";
 import {TAppThunk} from "../../utils/hooks";
+import {checkResponse} from "../../utils/utils";
 
 export const GET_INGREDIENTS = 'GET_INGREDIENTS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
@@ -24,12 +25,8 @@ export function getIngredients(){
         dispatch({type: GET_INGREDIENTS})
 
         fetch(`${ROOT_URL}/ingredients`)
+            .then(checkResponse)
             .then(res => {
-                if(res.ok){
-                    return res.json()
-                }
-            })
-            .then((res: any) => {
                 if(res && res.success){
                     dispatch({
                         type: GET_INGREDIENTS_SUCCESS,

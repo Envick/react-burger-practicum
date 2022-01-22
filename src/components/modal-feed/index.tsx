@@ -37,7 +37,7 @@ const ModalFeed: FC<IModalFeedProps> = ({isOpen}) => {
     }
 
     return (
-        <Modal isOpen={isOpen} headerSize={'default'} headerText={`#${activeFeed?._id}`} toggleModal={toggleFeedModal}>
+        <Modal isOpen={isOpen} headerSize={'default'} headerText={`#${activeFeed?.number}`} toggleModal={toggleFeedModal}>
             {activeFeed && (
                 <div>
                     <h3 className={"text text_type_main-medium mb-2"}>{activeFeed.name}</h3>

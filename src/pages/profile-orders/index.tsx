@@ -4,7 +4,8 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {logout} from "../../services/actions/auth";
 import {useDispatch, useSelector} from "../../utils/hooks";
 import FeedItem from "../../components/feed-item";
-import {WS_ORDERS_CONNECTION_START} from "../../services/actions/profile-orders";
+import {WS_ORDERS_CONNECTION_CLOSED, WS_ORDERS_CONNECTION_START} from "../../services/actions/profile-orders";
+
 const ProfileOrders: FC<any> = () => {
 
     const dispatch = useDispatch()
@@ -25,6 +26,9 @@ const ProfileOrders: FC<any> = () => {
 
     useEffect(() => {
         dispatch({type: WS_ORDERS_CONNECTION_START})
+        return () => {
+            dispatch({type: WS_ORDERS_CONNECTION_CLOSED})
+        }
     }, [])
 
     return (
@@ -43,7 +47,7 @@ const ProfileOrders: FC<any> = () => {
                    </div>
                    <div className={styles.orders}>
                        {orders.map(item => (
-                           <FeedItem key={item._id} onClick={feedClickHandler} isShowStatus={true} {...item} />
+                           <FeedItem key={Math.random() * 10000 + item._id} onClick={feedClickHandler} isShowStatus={true} {...item} />
                        ))}
                    </div>
                </div>

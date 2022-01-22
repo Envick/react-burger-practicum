@@ -37,7 +37,7 @@ const ModalProfileOrder: FC<IModalFeedProps> = ({isOpen}) => {
     }
 
     return activeFeed ? (
-        <Modal isOpen={isOpen} headerSize={'default'} headerText={`#${activeFeed?._id}`} toggleModal={toggleFeedModal}>
+        <Modal isOpen={isOpen} headerSize={'default'} headerText={`#${activeFeed?.number}`} toggleModal={toggleFeedModal}>
                 <div>
                     <h3 className={"text text_type_main-medium mb-2"}>{activeFeed.name}</h3>
                     <span style={{display:"block", color: activeFeed.status === 'done' ? '#00CCCC' : 'red'}}

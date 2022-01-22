@@ -4,7 +4,7 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "../../utils/hooks";
 import {TFeed, TIngredient} from "../../utils/constants";
-import {WS_FEED_CONNECTION_START} from "../../services/actions/feed";
+import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START} from "../../services/actions/feed";
 
 const FeedItem = () => {
 
@@ -30,13 +30,16 @@ const FeedItem = () => {
 
     useEffect(() => {
         dispatch({type: WS_FEED_CONNECTION_START})
+        return () => {
+            dispatch({type: WS_FEED_CONNECTION_CLOSED})
+        }
     }, [])
 
     return activeFeed ? (
         <main>
             <div className={"container pt-30"}>
                 <div className={styles.feedItem}>
-                    <span className={"text text_type_main-default mb-5"} style={{textAlign: "center", display: 'block'}}>#{activeFeed?._id}</span>
+                    <span className={"text text_type_main-default mb-5"} style={{textAlign: "center", display: 'block'}}>#{activeFeed?.number}</span>
                     <h3 className={"text text_type_main-medium mb-2"}>{activeFeed?.name}</h3>
                     <span style={{display:"block", color: activeFeed?.status === 'done' ? '#00CCCC' : 'red'}}
                           className={"text text_type_main-small mb-15"}>
