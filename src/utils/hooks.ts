@@ -38,4 +38,4 @@ export type TAppThunk<ReturnType = void> = ActionCreator<
         >
     >
 
-export const useDispatch = () => dispatchHook<TAppDispatch | TAppThunk>();
+export const useDispatch = () => dispatchHook<TAppDispatch>();
