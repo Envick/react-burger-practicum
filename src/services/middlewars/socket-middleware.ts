@@ -1,6 +1,7 @@
 import {Middleware, MiddlewareAPI} from "redux";
 import {getCookie} from "../../utils/utils";
 import {TAppDispatch, TRootState} from "../../utils/constants";
+import {TAppActions} from "../../utils/hooks";
 
 type TwsActions = {
     wsInit: string,

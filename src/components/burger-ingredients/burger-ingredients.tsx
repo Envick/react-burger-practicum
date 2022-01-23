@@ -9,9 +9,28 @@ import {TIngredient} from "../../utils/constants";
 
 function BurgerIngredients() {
     const [current, setCurrent] = useState<string>('bun')
+
     const navigate = useNavigate()
+
     const dispatch = useDispatch()
+
     const ingredientsRef = useRef<HTMLDivElement>(null)
+    const bunRef = useRef<HTMLDivElement>(null)
+    const sauceRef = useRef<HTMLDivElement>(null)
+    const mainRef = useRef<HTMLDivElement>(null)
+
+    function tabClickHandler(value: string){
+        setCurrent(value)
+        if(value === 'bun'){
+            bunRef.current && bunRef.current.scrollIntoView({behavior: 'smooth'})
+        }
+        else if(value === 'sauce'){
+            sauceRef.current && sauceRef.current.scrollIntoView({behavior: 'smooth'})
+        }
+        else{
+            mainRef.current && mainRef.current.scrollIntoView({behavior: 'smooth'})
+        }
+    }
 
     function ingredientClickHandler(item: TIngredient){
         dispatch({type: SET_ACTIVE_INGREDIENT, payload:item})
@@ -46,19 +65,19 @@ function BurgerIngredients() {
     return (
         <div className={`${styles.ingredientsBlock}`}>
             <div className={`${styles.tabs} pb-10`}>
-                <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+                <Tab value="bun" active={current === 'bun'} onClick={tabClickHandler}>
                     Булка
                 </Tab>
-                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+                <Tab value="sauce" active={current === 'sauce'} onClick={tabClickHandler}>
                     Соус
                 </Tab>
-                <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+                <Tab value="main" active={current === 'main'} onClick={tabClickHandler}>
                     Начинка
                 </Tab>
             </div>
 
             <div className={styles.ingredientItems} ref={ingredientsRef}>
-                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="bun">Булки</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="bun" ref={bunRef}>Булки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {ingredients.map((item:TIngredient) => {
                         if(item.type === 'bun'){
@@ -68,7 +87,7 @@ function BurgerIngredients() {
                         }
                     })}
                 </div>
-                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="sauce">Соусы</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="sauce" ref={sauceRef}>Соусы</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {ingredients.map((item:TIngredient) => {
                         if(item.type === 'sauce'){
@@ -78,7 +97,7 @@ function BurgerIngredients() {
                         }
                     })}
                 </div>
-                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="main">Начинки</h2>
+                <h2 className="text text_type_main-medium mb-6 ingredient-text" id="main" ref={mainRef}>Начинки</h2>
                 <div className={`${styles.itemsContainer} pl-4 pr-2 mb-10`}>
                     {ingredients.map((item:TIngredient) => {
                         if(item.type === 'main'){

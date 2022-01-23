@@ -8,7 +8,7 @@ export const  WS_ORDERS_SEND_MESSAGE = 'WS_ORDERS_SEND_MESSAGE'
 
 interface IWS_ORDERS_CONNECTION_CLOSED {
     readonly type: typeof WS_ORDERS_CONNECTION_CLOSED,
-    payload: any
+    payload?: any
 }
 interface IWS_ORDERS_CONNECTION_ERROR {
     readonly type: typeof WS_ORDERS_CONNECTION_ERROR,

@@ -15,6 +15,7 @@ import {TOrderActions} from "../services/actions/order-details";
 import {TProfileActions} from "../services/actions/profile";
 import {TProfileOrdersActions} from "../services/actions/profile-orders";
 import {Action, ActionCreator} from "redux";
+import {TFeedActions} from "../services/actions/feed";
 
 
 
@@ -27,6 +28,8 @@ export type TAppActions =
     TIngredientDetailsActions |
     TOrderActions |
     TProfileActions |
+    TProfileOrdersActions |
+    TFeedActions |
     TProfileOrdersActions
 
 export type TAppThunk<ReturnType = void> = ActionCreator<

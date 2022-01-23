@@ -10,7 +10,7 @@ import {register} from "../../services/actions/auth";
 function Register() {
     const dispatch = useDispatch()
 
-    const isAuth: boolean = useSelector((store: any) => store.auth.isAuth)
+    const isAuth: boolean = useSelector((store) => store.auth.isAuth)
 
     const state = useLocation().state;
 

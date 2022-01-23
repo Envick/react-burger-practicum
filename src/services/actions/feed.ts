@@ -8,7 +8,7 @@ export const  WS_FEED_SEND_MESSAGE = 'WS_FEED_SEND_MESSAGE'
 
 interface IWS_FEED_CONNECTION_CLOSED {
     readonly type: typeof WS_FEED_CONNECTION_CLOSED,
-    payload: any
+    payload?: any
 }
 interface IWS_FEED_CONNECTION_ERROR {
     readonly type: typeof WS_FEED_CONNECTION_ERROR,
