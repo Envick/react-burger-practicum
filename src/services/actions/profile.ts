@@ -1,6 +1,5 @@
 import {getCookie,retriableFetch} from "../../utils/utils";
 import {ROOT_URL, TAppDispatch, TUser} from "../../utils/constants";
-import {TAppThunk} from "../../utils/hooks";
 
 export const UPDATE_PROFILE_REQUEST = 'UPDATE_PROFILE_OPTIONS_REQUEST'
 export const UPDATE_PROFILE_REQUEST_SUCCESS = 'UPDATE_PROFILE_OPTIONS_REQUEST_SUCCESS'

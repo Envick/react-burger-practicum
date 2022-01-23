@@ -29,8 +29,8 @@ export type TClientRect = {
 }
 
 export type TUser = {
-    name?: string,
-    email?: string,
+    name: string,
+    email: string,
 }
 
 export type TOrder = {

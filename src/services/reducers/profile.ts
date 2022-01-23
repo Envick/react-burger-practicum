@@ -15,7 +15,10 @@ type TProfileState = {
 const initialState: TProfileState = {
     profileRequest: false,
     profileFailed: false,
-    profile: {}
+    profile: {
+        name: '',
+        email: ''
+    }
 }
 
 export const profileReducer = (state= initialState, action:TProfileActions): TProfileState => {
