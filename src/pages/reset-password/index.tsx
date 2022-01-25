@@ -3,7 +3,7 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import styles from './reset-password.module.css'
 import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {sendResetPasword} from "../../utils/utils";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 
 
 function ResetPassword() {
@@ -12,7 +12,7 @@ function ResetPassword() {
         token: '',
     })
 
-    const isAuth: boolean = useSelector((state:any) => state.auth.isAuth)
+    const isAuth: boolean = useSelector((state) => state.auth.isAuth)
 
     const onChange = (e:React.ChangeEvent<HTMLInputElement>): void => {
         setForm({...form, [e.target.name]: e.target.value})

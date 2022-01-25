@@ -12,7 +12,13 @@ import PageNotFound from "../../pages/page-not-found";
 import {ProtectedRoute} from "../protected-route/protected-route";
 import ModalIngredient from "../modal-ingredient/modal-ingredient";
 import {getIngredients} from "../../services/actions/ingredients";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../utils/hooks";
+import ProfileOrders from "../../pages/profile-orders";
+import Feed from "../../pages/feed";
+import FeedItem from "../../pages/feed-item";
+import ModalFeed from "../modal-feed";
+import ProfileOrdersItem from "../../pages/profile-orders-item";
+import ModalProfileOrder from "../modal-profile-order";
 
 function App() {
     const dispatch = useDispatch()
@@ -32,23 +38,31 @@ function App() {
 function AppRoutes () {
     const location = useLocation()
     const background = location.state?.background
-
+    const feedBackground = location.state?.feedBackground
     return (
         <>
-            <Routes location={background ?? location}>
+            <Routes location={background ?? feedBackground ?? location}>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/forgot-password" element={<ForgotPassword/>}/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
+                <Route path="/feed" element={<Feed/>}/>
+                <Route path="/feed/:id" element={<FeedItem/>}/>
                 <Route  path='/profile' element={<ProtectedRoute/>}>
                     <Route  path='/profile' element={<Profile/>}/>
+                    <Route  path='/profile/orders' element={<ProfileOrders/>}/>
+                    <Route  path='/profile/orders/:id' element={<ProfileOrdersItem/>}/>
                 </Route>
                 <Route path="/ingredients/:id" element={<Ingredient/>}/>
                 <Route element={<PageNotFound/>}/>
             </Routes>
             <Routes>
                 {background && <Route path="/ingredients/:id" element={<ModalIngredient isOpen={Boolean(background)}/>}/>}
+            </Routes>
+            <Routes>
+                {feedBackground && <Route path="/feed/:id" element={<ModalFeed isOpen={Boolean(feedBackground)}/>}/>}
+                {feedBackground && <Route path="/profile/orders/:id" element={<ModalProfileOrder isOpen={Boolean(feedBackground)}/>}/>}
             </Routes>
         </>
     )

@@ -1,0 +1,51 @@
+.count{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+.feedIngredients{
+    display: flex;
+    flex-direction: column;
+    max-height: 312px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+.feedImageContainer{
+    width: 64px;
+    height: 64px;
+    background: #131316;
+    border-radius: 100px;
+    border: 2px solid #801AB3;
+    margin-right: 16px;
+}
+.feedImage{
+    height: 100%;
+    display: block;
+    margin-left: -30px;
+}
+.feedIngredients::-webkit-scrollbar {
+    width: 8px;
+}
+.feedIngredients::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+    border-radius: 2px;
+}
+.feedIngredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border-radius: 2px;
+}
+.feedIngredient{
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 30px;
+}
+.status{
+    display: block;
+}

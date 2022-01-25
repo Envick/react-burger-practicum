@@ -1,17 +1,27 @@
 import {
     GET_PROFILE_REQUEST,
     GET_PROFILE_REQUEST_FAILED,
-    GET_PROFILE_REQUEST_SUCCESS,
+    GET_PROFILE_REQUEST_SUCCESS, TProfileActions,
     UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_REQUEST_FAILED, UPDATE_PROFILE_REQUEST_SUCCESS
 } from "../actions/profile";
+import {TUser} from "../../utils/constants";
 
-const initialState = {
-    profileRequest: false,
-    profileFailed: false,
-    profile: {}
+type TProfileState = {
+    profileRequest: boolean,
+    profileFailed: boolean,
+    profile: TUser
 }
 
-export const profileReducer = (state=initialState, action:any) => {
+const initialState: TProfileState = {
+    profileRequest: false,
+    profileFailed: false,
+    profile: {
+        name: '',
+        email: ''
+    }
+}
+
+export const profileReducer = (state= initialState, action:TProfileActions): TProfileState => {
     switch (action.type){
         case GET_PROFILE_REQUEST:{
             return {
@@ -23,7 +33,7 @@ export const profileReducer = (state=initialState, action:any) => {
         case GET_PROFILE_REQUEST_SUCCESS:{
             return {
                 ...state,
-                profile: action.payload.user,
+                profile: action.payload,
                 profileRequest: false
             }
         }
@@ -43,7 +53,7 @@ export const profileReducer = (state=initialState, action:any) => {
         case UPDATE_PROFILE_REQUEST_SUCCESS:{
             return {
                 ...state,
-                profile: action.payload.user,
+                profile: action.payload,
                 profileRequest: false
             }
         }

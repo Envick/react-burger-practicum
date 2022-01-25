@@ -2,12 +2,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 import styles from './profile.module.css'
 import {NavLink} from "react-router-dom";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {getProfile, updateProfile} from "../../services/actions/profile";
 import {logout} from "../../services/actions/auth";
 
 const Profile = () => {
-    const profile = useSelector((state:any) => state.profile)
+    const profile = useSelector((state) => state.profile)
 
     const [form, setForm] = useState<{name: string, email:string, password: string}>({
         name: '',
@@ -33,8 +33,8 @@ const Profile = () => {
 
     const onCancelClick = () : void => {
         setForm({
-            name: profile.profile.name,
-            email: profile.profile.email,
+            name: profile.profile.name ?? '',
+            email: profile.profile.email ?? '',
             password: ''
         })
     }

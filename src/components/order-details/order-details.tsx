@@ -3,10 +3,10 @@ import React from 'react';
 import styles from './order-details.module.css'
 
 import doneImg from '../../images/done.png'
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 
 function OrderDetails() {
-    const orderDetails = useSelector((state: any) => state.orderDetails.orderDetails)
+    const orderDetails = useSelector((state) => state.orderDetails.orderDetails)
 
     return (
         <div className={`${styles.orderDetails} pt-4`}>

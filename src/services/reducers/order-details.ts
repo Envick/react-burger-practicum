@@ -1,11 +1,17 @@
-import {ORDER_FAILED, ORDER_SUCCESS, TAKE_ORDER} from "../actions/order-details";
+import {ORDER_FAILED, ORDER_SUCCESS, TAKE_ORDER, TOrderActions} from "../actions/order-details";
 
-const initialState = {
+type TOrderDetailsState = {
+    orderDetailsRequest: boolean,
+    orderDetailsFailed: boolean,
+    orderDetails: any
+}
+
+const initialState: TOrderDetailsState = {
     orderDetailsRequest: false,
     orderDetailsFailed: false,
     orderDetails: null
 }
-export const orderDetailsReducer = (state = initialState, action:any) => {
+export const orderDetailsReducer = (state = initialState, action:TOrderActions): TOrderDetailsState => {
     switch(action.type){
         case TAKE_ORDER :{
             return {

@@ -13,10 +13,10 @@ function AppHeader() {
                             <BurgerIcon type="primary"/>
                             <span  className="pl-2 text text_type_main-default">Конструктор</span>
                         </Link>
-                        <a href="/" className={`${styles.navItem} pl-5 pt-4 pr-5 pb-4`}>
+                        <Link to="/feed" className={`${styles.navItem} pl-5 pt-4 pr-5 pb-4`}>
                             <ListIcon type="secondary"/>
                             <span className="pl-2 text text_type_main-default text_color_inactive">Лента заказов</span>
-                        </a>
+                        </Link>
                     </div>
                     <Logo/>
                     <Link to="/profile" className={`${styles.navItem} ${styles.cabinetLink}`}>

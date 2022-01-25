@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css'
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {useDrop} from "react-dnd";
 import {
     ADD_CONSTRUCTOR_BUN,
@@ -19,16 +19,16 @@ function BurgerConstructor() {
 
     const [showModal, setShowModal] = useState<boolean>(false)
 
-    const isAuth: boolean = useSelector((store: any) => store.auth.isAuth)
+    const isAuth: boolean = useSelector((store) => store.auth.isAuth)
 
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
-    const burgerConstructorState = useSelector((state: any) => state.constructorIngredients)
+    const burgerConstructorState = useSelector((state) => state.constructorIngredients)
 
     const totalPrice = useMemo<number>(() => {
-        return burgerConstructorState.ingredients.reduce((acc:number, item:TIngredient) => acc+=item.price, 0) + (burgerConstructorState?.bun?.price * 2 || 0)
+        return burgerConstructorState.ingredients.reduce((acc:number, item:TIngredient) => acc+=item.price, 0) + ((burgerConstructorState?.bun?.price || 0) * 2)
     }, [burgerConstructorState.bun, burgerConstructorState.ingredients])
 
     const [{isHover},dropRef] = useDrop({
@@ -54,6 +54,9 @@ function BurgerConstructor() {
     }, [dispatch]);
 
     function orderClickHandler(): void{
+        if(!burgerConstructorState.bun){
+            return
+        }
         if(isAuth){
             const burgerOrder: string[] = burgerConstructorState.ingredients.reduce((acc: string[], item:TIngredient) => {
                 return [...acc, item['_id']]
@@ -70,7 +73,7 @@ function BurgerConstructor() {
     }
 
     function handleDeleteElement(item:TIngredient): void{
-        dispatch({type:REMOVE_CONSTRUCTOR_INGREDIENT, payload: item['key']})
+        dispatch({type:REMOVE_CONSTRUCTOR_INGREDIENT, payload: item['key'] ?? 0})
     }
     function renderIngredients(item:TIngredient, index:number){
         return (

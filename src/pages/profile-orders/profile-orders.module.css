@@ -1,0 +1,18 @@
+.aside{
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+}
+.asideMenus{
+    display: flex;
+    flex-direction: column;
+}
+.asideLink{
+    height: 64px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.profileOrdersContent{
+    display: flex;
+}

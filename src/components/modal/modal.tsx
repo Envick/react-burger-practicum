@@ -8,11 +8,12 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 interface IModalProps {
     isOpen: boolean,
     headerText?: string,
-    toggleModal: () => void
+    toggleModal: () => void,
+    headerSize?: string
 }
 const root: HTMLElement | null = document.querySelector('#modals')
 
-const Modal: FC<IModalProps> = ({isOpen, headerText, toggleModal, children}) => {
+const  Modal: FC<IModalProps> = ({isOpen, headerSize = 'large',  headerText, toggleModal, children}) => {
     const escClickHandler = useCallback((e: KeyboardEvent) => {
         if(e.key === 'Escape' && isOpen){
             toggleModal()
@@ -33,9 +34,9 @@ const Modal: FC<IModalProps> = ({isOpen, headerText, toggleModal, children}) => 
 
     const modal = (
         <>
-            <div className={`${styles.modal} ${isOpen ? styles.showModal : ''} pt-10 pr-10 pl-10`}>
+            <div className={`${styles.modal} ${isOpen ? styles.showModal : ''} pt-5 pr-10 pl-10`}>
                 <div className={styles.modalHeader}>
-                    <h1 className="text text_type_main-large">{headerText}</h1>
+                    <h1 className={`text text_type_main-${headerSize}`}>{headerText}</h1>
                     <div className={styles.modalClose} onClick={toggleModal}>
                         <CloseIcon type="primary" />
                     </div>
