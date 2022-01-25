@@ -46,3 +46,6 @@
     align-items: center;
     padding-bottom: 30px;
 }
+.status{
+    display: block;
+}

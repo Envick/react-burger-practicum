@@ -39,16 +39,16 @@ const FeedItem = () => {
         <main>
             <div className={"container pt-30"}>
                 <div className={styles.feedItem}>
-                    <span className={"text text_type_main-default mb-5"} style={{textAlign: "center", display: 'block'}}>#{activeFeed?.number}</span>
+                    <h5 className={ styles.feedNumber + "text text_type_main-default mb-5"}>#{activeFeed?.number}</h5>
                     <h3 className={"text text_type_main-medium mb-2"}>{activeFeed?.name}</h3>
-                    <span style={{display:"block", color: activeFeed?.status === 'done' ? '#00CCCC' : 'red'}}
+                    <h5
                           className={"text text_type_main-small mb-15"}>
                         {
                             activeFeed?.status === 'created' ? 'Создан' :
                                 activeFeed?.status === 'done' ? 'Выполнен' :
                                     'Готовится'
                         }
-                    </span>
+                    </h5>
                     <h4 className={"text text_type_main-medium mb-6"}>Состав:</h4>
                     <div className={`${styles.feedIngredients} mb-10`}>
                         {feedIngredients.map(item => (

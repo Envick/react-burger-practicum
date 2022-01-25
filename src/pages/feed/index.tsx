@@ -40,20 +40,20 @@ const Feed: FC<any> = () => {
                             <div className={styles.feedReady}>
                                 <span className="text text_type_main-medium mb-6">Готовы:</span>
                                 {orders.filter(item => item.status === 'done').slice(0, 5).map(item => (
-                                    <span key={item._id + Math.random() * 10000} style={{color: '#00CCCC'}} className="text text_type_main-default">{item.number}</span>
+                                    <h5 key={item._id + Math.random() * 10000} className="text text_type_main-default">{item.number}</h5>
                                 ))}
                             </div>
                             <div className={styles.feedPending}>
                                 <span className="text text_type_main-medium mb-6">В работе:</span>
                                 {orders.filter(item => item.status === 'pending').slice(0, 5).map(item => (
-                                    <span key={item._id + Math.random() * 10000} style={{color: '#00CCCC'}} className="text text_type_main-default">{item.number}</span>
+                                    <h5 key={item._id + Math.random() * 10000} className="text text_type_main-default">{item.number}</h5>
                                 ))}
                             </div>
                         </div>
-                       <span style={{display: 'block'}} className={"text text_type_main-medium"}>Выполнено за все время:</span>
-                       <span style={{display: 'block'}} className={"text text_type_digits-large mb-15"}>{totalSum}</span>
-                       <span style={{display: 'block'}} className={"text text_type_main-medium"}>Выполнено за сегодня:</span>
-                       <span style={{display: 'block'}} className={"text text_type_digits-large mb-15"}>{totalTodaySum}</span>
+                       <h5 className={"text text_type_main-medium"}>Выполнено за все время:</h5>
+                       <h5 className={"text text_type_digits-large mb-15"}>{totalSum}</h5>
+                       <h5 className={"text text_type_main-medium"}>Выполнено за сегодня:</h5>
+                       <h5 className={"text text_type_digits-large mb-15"}>{totalTodaySum}</h5>
                    </div>
                </div>
             </div>
