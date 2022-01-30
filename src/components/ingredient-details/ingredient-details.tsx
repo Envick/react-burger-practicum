@@ -8,7 +8,7 @@ interface IIngredientDetails {
 
 const IngredientDetails: FC<IIngredientDetails> = ({ingredient}) => {
     return (
-        <div className={styles.ingredientsModalBody}>
+        <div className={`${styles.ingredientsModalBody} ingredient-details`}>
              <div className="mb-4">
                  <img src={ingredient.image_large} alt=""/>
              </div>

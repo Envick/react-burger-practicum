@@ -34,7 +34,7 @@ const  Modal: FC<IModalProps> = ({isOpen, headerSize = 'large',  headerText, tog
 
     const modal = (
         <>
-            <div className={`${styles.modal} ${isOpen ? styles.showModal : ''} pt-5 pr-10 pl-10`}>
+            <div className={`${styles.modal} ${isOpen ? `${styles.showModal} show` : 'hide'} pt-5 pr-10 pl-10 modal`}>
                 <div className={styles.modalHeader}>
                     <h1 className={`text text_type_main-${headerSize}`}>{headerText}</h1>
                     <div className={styles.modalClose} onClick={toggleModal}>

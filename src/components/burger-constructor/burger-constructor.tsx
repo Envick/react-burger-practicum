@@ -115,7 +115,7 @@ function BurgerConstructor() {
                 )}
             </div>
             {Boolean(burgerConstructorState.bun || burgerConstructorState.ingredients.length) && (
-                <div className={`${styles.offer} pr-4`}>
+                <div className={`${styles.offer} offer-block pr-4`}>
                     <span className={`text text_type_digits-medium mr-10 ${styles.offerPrice}`}>
                         {totalPrice}
                         <CurrencyIcon type="primary"/>

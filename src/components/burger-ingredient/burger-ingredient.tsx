@@ -28,7 +28,7 @@ const BurgerIngredient: FC<TBurgerIngredientProps> = ({item, ingredientClickHand
     }, [constructorIngredientsState.bun, constructorIngredientsState.ingredients])
 
     return (
-        <div ref={dragRef}  className={styles.burgerCard} onClick={() => ingredientClickHandler(item)}>
+        <div ref={dragRef}  className={`${styles.burgerCard} burger-card`} onClick={() => ingredientClickHandler(item)}>
             <Counter
                 count={getIngredientCount()}
                 size="default"
