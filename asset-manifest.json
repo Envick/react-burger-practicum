@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/react-burger-practicum/static/css/main.ae64c53e.chunk.css",
+    "main.js": "/react-burger-practicum/static/js/main.2bd3b408.chunk.js",
+    "main.js.map": "/react-burger-practicum/static/js/main.2bd3b408.chunk.js.map",
+    "runtime-main.js": "/react-burger-practicum/static/js/runtime-main.5f169563.js",
+    "runtime-main.js.map": "/react-burger-practicum/static/js/runtime-main.5f169563.js.map",
+    "static/css/2.18e76c92.chunk.css": "/react-burger-practicum/static/css/2.18e76c92.chunk.css",
+    "static/js/2.711cfc27.chunk.js": "/react-burger-practicum/static/js/2.711cfc27.chunk.js",
+    "static/js/2.711cfc27.chunk.js.map": "/react-burger-practicum/static/js/2.711cfc27.chunk.js.map",
+    "static/js/3.5fa1e301.chunk.js": "/react-burger-practicum/static/js/3.5fa1e301.chunk.js",
+    "static/js/3.5fa1e301.chunk.js.map": "/react-burger-practicum/static/js/3.5fa1e301.chunk.js.map",
+    "index.html": "/react-burger-practicum/index.html",
+    "static/css/2.18e76c92.chunk.css.map": "/react-burger-practicum/static/css/2.18e76c92.chunk.css.map",
+    "static/css/main.ae64c53e.chunk.css.map": "/react-burger-practicum/static/css/main.ae64c53e.chunk.css.map",
+    "static/js/2.711cfc27.chunk.js.LICENSE.txt": "/react-burger-practicum/static/js/2.711cfc27.chunk.js.LICENSE.txt",
+    "static/media/fonts.css": "/react-burger-practicum/static/media/iceland.77ad7fc2.woff",
+    "static/media/done.dc2f52b0.png": "/react-burger-practicum/static/media/done.dc2f52b0.png",
+    "static/media/drag-icon.dd0d8b18.svg": "/react-burger-practicum/static/media/drag-icon.dd0d8b18.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5f169563.js",
+    "static/css/2.18e76c92.chunk.css",
+    "static/js/2.711cfc27.chunk.js",
+    "static/css/main.ae64c53e.chunk.css",
+    "static/js/main.2bd3b408.chunk.js"
+  ]
+}
