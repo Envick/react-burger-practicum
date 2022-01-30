@@ -1,4 +1,5 @@
 import {ingredientDetailsReducer} from "./ingredient-details";
+import {SET_ACTIVE_INGREDIENT} from "../actions/ingredient-details";
 
 describe('ingredientDetailsReducer', () => {
     const initialState = {}
@@ -9,7 +10,7 @@ describe('ingredientDetailsReducer', () => {
 
     it('should work for set active ingredient', function () {
         expect(ingredientDetailsReducer(initialState, {
-            type: 'SET_ACTIVE_INGREDIENT',
+            type: SET_ACTIVE_INGREDIENT,
             payload: {
                 _id: 1,
                 name: "string",

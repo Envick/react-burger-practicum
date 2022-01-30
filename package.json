@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://envick.github.io/react-burger/",
+  "homepage": "https://envick.github.io/react-burger-practicum/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -30,6 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "cypress": "cypress open cache clear",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

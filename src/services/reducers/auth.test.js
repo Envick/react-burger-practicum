@@ -1,4 +1,11 @@
 import {authReducer} from "./auth";
+import {
+    LOGIN_REQUEST,
+    LOGIN_REQUEST_FAILED, LOGIN_REQUEST_SUCCESS, LOGOUT_REQUEST, LOGOUT_REQUEST_FAILED, LOGOUT_REQUEST_SUCCESS,
+    REGISTER_REQUEST,
+    REGISTER_REQUEST_FAILED,
+    REGISTER_REQUEST_SUCCESS
+} from "../actions/auth";
 
 describe('authReducer', () => {
 
@@ -21,7 +28,7 @@ describe('authReducer', () => {
     it('should handle register request', () => {
         expect(
             authReducer(initialState, {
-                type: "REGISTER_REQUEST",
+                type: REGISTER_REQUEST,
             })
         ).toEqual(
             {
@@ -32,7 +39,7 @@ describe('authReducer', () => {
         )
         expect(
             authReducer(initialState, {
-                type: "REGISTER_REQUEST_FAILED",
+                type: REGISTER_REQUEST_FAILED,
             })
         ).toEqual(
             {
@@ -42,7 +49,7 @@ describe('authReducer', () => {
         )
         expect(
             authReducer(initialState, {
-                type: "REGISTER_REQUEST_SUCCESS",
+                type: REGISTER_REQUEST_SUCCESS,
                 payload: {
                     accessToken: 'Bearer 2132',
                     refreshToken: 'sadsad'
@@ -59,7 +66,7 @@ describe('authReducer', () => {
     it('should handle login request', () => {
         expect(
             authReducer(initialState, {
-                type: "LOGIN_REQUEST",
+                type: LOGIN_REQUEST,
             })
         ).toEqual(
             {
@@ -70,7 +77,7 @@ describe('authReducer', () => {
         )
         expect(
             authReducer(initialState, {
-                type: "LOGIN_REQUEST_FAILED",
+                type:   LOGIN_REQUEST_FAILED,
             })
         ).toEqual(
             {
@@ -80,7 +87,7 @@ describe('authReducer', () => {
         )
         expect(
             authReducer(initialState, {
-                type: "LOGIN_REQUEST_SUCCESS",
+                type: LOGIN_REQUEST_SUCCESS,
                 payload: {
                     accessToken: 'Bearer 2132',
                     refreshToken: 'sadsad'
@@ -97,7 +104,7 @@ describe('authReducer', () => {
     it('should handle logout request', () => {
         expect(
             authReducer(initialState, {
-                type: "LOGOUT_REQUEST",
+                type: LOGOUT_REQUEST,
             })
         ).toEqual(
             {
@@ -108,7 +115,7 @@ describe('authReducer', () => {
         )
         expect(
             authReducer(initialState, {
-                type: "LOGOUT_REQUEST_FAILED",
+                type: LOGOUT_REQUEST_FAILED,
             })
         ).toEqual(
             {
@@ -118,7 +125,7 @@ describe('authReducer', () => {
         )
         expect(
             authReducer(initialState, {
-                type: "LOGOUT_REQUEST_SUCCESS",
+                type: LOGOUT_REQUEST_SUCCESS,
                 payload: {
                     refreshToken: 'sadsad'
                 }
